@@ -103,21 +103,15 @@ if (!isset($_session['id'])) {
 <?php           
   $stmt1 = $mng->db->prepare("SELECT name,contact,schedule FROM users u INNER JOIN appointment_list a on a.doctor_id=u.id WHERE a.patient_id =" .$_session['id']);
     if ($stmt1->execute()) {
-        $order1 = $stmt1->get_result()->fetch_assoc();
+        $order1 = $stmt1->get_result()->fetch_all(MYSQLI_ASSOC);
         $stmt1->close();
     }
-                           
-
-
-
-
-    
+                 
 foreach($order1 as $row) {
     echo"<tr>";
-
-    echo "<td>".print_r($row)."</td>";
-    echo "<td>".$row[1]."</td>";
-    echo "<td>".$row[2]."</td>";
+    echo "<td>".$row['name']."</td>";
+    echo "<td>".$row['contact']."</td>";
+    echo "<td>".$row['schedule']."</td>";
     echo"</tr>";
    
 }
