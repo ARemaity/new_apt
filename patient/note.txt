@@ -1,0 +1,6 @@
+Home Page
+   get patient self data
+Doctors Page
+​​​​​​​ #The page where all the doctors and their details are listed and the page where the patients will submit their appointment requests.(get doctor tbl and there appt/insert to appt)
+About Page
+​​​​​​​ #The page where the content of the website is being displayed.(get system_tbl data);

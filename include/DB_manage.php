@@ -1,22 +1,17 @@
 <?php 
 
-//America/New_York
-
 class DB_Manage {
      
      
-    private $conn;
- 
-//private $timezone;
-    // constructor
+    private $db;
+
     function __construct() {
         require_once 'DB_Connect.php';
         // connecting to database
         $db = new Db_Connect();
-        $this->conn = $db->connect();
+        $this->db = $db->connect();
 
-       // $this->date= new DateTime("now", new DateTimeZone('Asia/Beirut'));
-       // $this->timezone=$this->date->format('Y-m-d H:i:s');
+      
     }
 
     // destructor
@@ -24,231 +19,234 @@ class DB_Manage {
         
     }
 
-    // public function insertintoclient($name,$address,$phone_number) {
-                                
-    //                 $stmt = $this->conn->prepare("INSERT INTO `client`(`CID`, `name`, `address`, `phone_number`) VALUES (NULL,?,?,?)");
-    //                 $stmt->bind_param("ssi",$name,$address,$phone_number);
-    //                 $result = $stmt->execute();
-    //                 $stmt->close();
-    //              // check for successful stores
-    //              if ($result) {
-    //                  return true;
-    //              } else {
-    //                  return false;
-    //              }
-    //          }
+    function login(){
+		extract($_POST);
+		$qry = $this->db->query("SELECT * FROM users where username = '".$username."' and password = '".$password."' ");
+		if($qry->num_rows > 0){
+			foreach ($qry->fetch_array() as $key => $value) {
+				if($key != 'passwors' && !is_numeric($key))
+					$_SESSION['login_'.$key] = $value;
+			}
+				return 1;
+		}else{
+			return 3;
+		}
+	}
+	function login2(){
+		extract($_POST);
+		$qry = $this->db->query("SELECT * FROM users where username = '".$email."' and password = '".md5($password)."' ");
+		if($qry->num_rows > 0){
+			foreach ($qry->fetch_array() as $key => $value) {
+				if($key != 'passwors' && !is_numeric($key))
+					$_SESSION['login_'.$key] = $value;
+			}
+				return 1;
+		}else{
+			return 3;
+		}
+	}
+	function logout(){
+		session_destroy();
+		foreach ($_SESSION as $key => $value) {
+			unset($_SESSION[$key]);
+		}
+		header("location:login.php");
+	}
+	function logout2(){
+		session_destroy();
+		foreach ($_SESSION as $key => $value) {
+			unset($_SESSION[$key]);
+		}
+		header("location:../index.php");
+	}
 
-        //      public function deletefromclient($clientid) {
-                                
-        //         $stmt = $this->conn->prepare("DELETE FROM `client` WHERE CID = ?");
-        //         $stmt->bind_param("i",$clientid);
-        //          $result = $stmt->execute();
-        //      $stmt->close();
-        //      // check for successful stores
-        //      if ($result) {
-        //          return true;
-        //      } else {
-        //          return false;
-        //      }
-        //  }
+	function save_user(){
+		extract($_POST);
+		$data = " name = '$name' ";
+		$data .= ", username = '$username' ";
+		$data .= ", password = '$password' ";
+		$data .= ", type = '$type' ";
+		if(empty($id)){
+			$save = $this->db->query("INSERT INTO users set ".$data);
+		}else{
+			$save = $this->db->query("UPDATE users set ".$data." where id = ".$id);
+		}
+		if($save){
+			return 1;
+		}
+	}
+	function signup(){
+		extract($_POST);
+		$data = " name = '$name' ";
+		$data .= ", contact = '$contact' ";
+		$data .= ", address = '$address' ";
+		$data .= ", username = '$email' ";
+		$data .= ", password = '".md5($password)."' ";
+		$data .= ", type = 3";
+		$chk = $this->db->query("SELECT * FROM users where username = '$email' ")->num_rows;
+		if($chk > 0){
+			return 2;
+			exit;
+		}
+			$save = $this->db->query("INSERT INTO users set ".$data);
+		if($save){
+			$qry = $this->db->query("SELECT * FROM users where username = '".$email."' and password = '".md5($password)."' ");
+			if($qry->num_rows > 0){
+				foreach ($qry->fetch_array() as $key => $value) {
+					if($key != 'passwors' && !is_numeric($key))
+						$_SESSION['login_'.$key] = $value;
+				}
+			}
+			return 1;
+		}
+	}
 
+	function save_settings(){
+		extract($_POST);
+		$data = " name = '".str_replace("'","&#x2019;",$name)."' ";
+		$data .= ", email = '$email' ";
+		$data .= ", contact = '$contact' ";
+		$data .= ", about_content = '".htmlentities(str_replace("'","&#x2019;",$about))."' ";
+	
+		// echo "INSERT INTO system_tbl set ".$data;
+		$chk = $this->db->query("SELECT * FROM system_tbl");
+		if($chk->num_rows > 0){
+			$save = $this->db->query("UPDATE system_tbl set ".$data);
+		}else{
+			$save = $this->db->query("INSERT INTO system_tbl set ".$data);
+		}
+		if($save){
+		$query = $this->db->query("SELECT * FROM system_tbl limit 1")->fetch_array();
+		foreach ($query as $key => $value) {
+			if(!is_numeric($key))
+				$_SESSION['setting_'.$key] = $value;
+		}
 
-         public function insertintocompany($name,$address,$phone,$description) {
-                                
-            $stmt = $this->conn->prepare("INSERT INTO `company`(`CID`, `name`, `address`, `phone`, `description`) VALUES (Null,?,?,?,?)");
-            $stmt->bind_param("ssis",$name,$address,$phone,$description);
-            $result = $stmt->execute();
-            $stmt->close();
-         // check for successful stores
-         if ($result) {
-             return true;
-         } else {
-             return false;
-         }
-     }
+			return 1;
+				}
+	}
 
+	
 
-     public function insertintoexpense($name,$description) {
-                                
-        $stmt = $this->conn->prepare("INSERT INTO `expense`(`EID`, `name`, `description`) VALUES (Null,?,?)");
-        $stmt->bind_param("ss",$name,$description);
-        $result = $stmt->execute();
-        $stmt->close();
-     // check for successful stores
-     if ($result) {
-         return true;
-     } else {
-         return false;
-     }
- }
+	function save_doctor(){
+		extract($_POST);
+		$data = " name = '$name' ";
+		$data .= ", name_pref = '$name_pref' ";
+		$data .= ", clinic_address = '$clinic_address' ";
+		$data .= ", contact = '$contact' ";
+		$data .= ", email = '$email' ";
+		if(!empty($_FILES['img']['tmp_name'])){
+			$fname = strtotime(date("Y-m-d H:i"))."_".$_FILES['img']['name'];
+			$move = move_uploaded_file($_FILES['img']['tmp_name'], '../assets/img/'.$fname);
+			if($move){
+				$data .=", img_path = '$fname' ";
+			}
+		}
+		$data .=" , specialty_ids = '[".implode(",",$specialty_ids)."]' ";
+		if(empty($id)){
+			$save = $this->db->query("INSERT INTO doctors_list set ".$data);
+			$did= $this->db->insert_id;
+		}else{
+			$save = $this->db->query("UPDATE doctors_list set ".$data." where id=".$id);
+		}
+		if($save){
+			$data = " username = '$email' ";
+			if(!empty($password))
+			$data .= ", password = '".$password."' ";
+			$data .= ", name = 'DR.".$name.', '.$name_pref."' ";
+			$data .= ", contact = '$contact' ";
+			$data .= ", address = '$clinic_address' ";
+			$data .= ", type = 2";
+			if(empty($id)){
+				$chk = $this->db->query("SELECT * FROM users where username = '$email ")->num_rows;
+				if($chk > 0){
+					return 2;
+					exit;
+				}
+					$data .= ", doctor_id = '$did'";
 
+					$save = $this->db->query("INSERT INTO users set ".$data);
+			}else{
+				$chk = $this->db->query("SELECT * FROM users where username = '$email' and doctor_id != ".$id)->num_rows;
+				if($chk > 0){
+					return 2;
+					exit;
+				}
+					$data .= ", doctor_id = '$id'";
+				$chk2 = $this->db->query("SELECT * FROM users where doctor_id = ".$id)->num_rows;
+					if($chk2 > 0)
+						$save = $this->db->query("UPDATE users set ".$data." where doctor_id = ".$id);
+					else
+						$save = $this->db->query("INSERT INTO users set ".$data);
+					
 
+			}
+			return 1;
+		}
+	}
+	function delete_doctor(){
+		
+		$delete = $this->db->query("DELETE FROM doctors_list where id = ".$id);
+		if($delete)
+			return 1;
+	}
 
- public function insertintoexpense_transaction($fk_UID,$fk_PID,$fk_IID,$cost) {
-                                
-    $stmt = $this->conn->prepare("INSERT INTO `expense_transaction`(`ETID`, `fk_UID`, `fk_PID`, `fk_EID`,`cost`,`created_at`) VALUES (Null,?,?,?,?,NOW())");
-    $stmt->bind_param("iiid",$fk_UID,$fk_PID,$fk_IID,$cost);
-    $result = $stmt->execute();
-    $stmt->close();
- // check for successful stores
- if ($result) {
-     return true;
- } else {
-     return false;
- }
-}
+	function save_schedule(){
+		extract($_POST);
+		foreach($days as $k => $val){
+			$data = " doctor_id = '$doctor_id' ";
+			$data .= ", day = '$days[$k]' ";
+			$data .= ", time_from = '$time_from[$k]' ";
+			$data .= ", time_to = '$time_to[$k]' ";
+			if(isset($check[$k])){
+				if($check[$k]>0)
+				$save[] = $this->db->query("UPDATE doctors_schedule set ".$data." where id =".$check[$k]);
+			else
+				$save[] = $this->db->query("INSERT INTO doctors_schedule set ".$data);
+			}
+		}
 
+			if(isset($save)){
+				return 1;
+			}
+	}
 
+	function set_appointment(){
+		extract($_POST);
+		$doc = $this->db->query("SELECT * FROM doctors_list where id = ".$doctor_id);
+		$schedule = date('Y-m-d',strtotime($date)).' '.date('H:i',strtotime($time)).":00";
+		$day = date('l',strtotime($date));
+		$time = date('H:i',strtotime($time)).":00";
+		$sched = date('H:i',strtotime($time));
+		$doc_sched_check = $this->db->query("SELECT * FROM doctors_schedule where doctor_id = $doctor_id and day = '$day' and ('$time' BETWEEN time_from and time_to )");
+		if($doc_sched_check->num_rows <= 0){
+			return json_encode(array('status'=>2,"msg"=>"Appointment schedule not valid for selected doctor's schedule."));
+			exit;
+		}
 
+		$data = " doctor_id = '$doctor_id' ";
+		if(!isset($patient_id))
+		$data .= ", patient_id = '".$_SESSION['login_id']."' ";
+		else
+		$data .= ", patient_id = '$patient_id' ";
 
-
-
-
-
-public function insertintoincome_transaction($fk_UID,$fk_PID,$fk_IID,$created_at) {
-                                
-    $stmt = $this->conn->prepare("INSERT INTO `income_transaction`(`ITID`, `fk_UID`, `fk_PID`, `fk_IID`, `created_at`) VALUES (Null,?,?,?,?)");
-    $stmt->bind_param("iiis",$fk_UID,$fk_PID,$fk_IID,$created_at);
-    $result = $stmt->execute();
-    $stmt->close();
- // check for successful stores
- if ($result) {
-     return true;
- } else {
-     return false;
- }
-}
-
-
-
-
-public function insertintoproject($number,$city,$client_name,$client_phone) {
-                                
-    $stmt = $this->conn->prepare("INSERT INTO `project`(`PID`, `number`, `city`, `client_name`, `client_phone`, `created_at`) VALUES (Null,?,?,?,?,NOW())");
- 
-    $stmt->bind_param("issi",$number,$city,$client_name,$client_phone);
-  
-    $result = $stmt->execute();
-    $stmt->close();
- // check for successful stores
- if ($result) {
-     return true;
- } else {
-     return false;
- }
-}
-
-  
-
- public function getcompany($companyid) {
-       
-    $stmt = $this->conn->prepare("SELECT `CID`, `name`, `address`, `phone`, `description` FROM `company` WHERE CID = ?");        
-$stmt->bind_param("i", $companyid);   
-
-if ($stmt->execute()) {			
-     $order = $stmt->get_result()->fetch_assoc();
-     $stmt->close();
-     return $order; 
- } else {
-    return NULL;
- }
-}
-
-
-public function getexpense($expenseid) {
-       
-    $stmt = $this->conn->prepare("SELECT `EID`, `name`, `description` FROM `expense` WHERE EID = ?");        
-$stmt->bind_param("i", $expenseid);   
-
-if ($stmt->execute()) {			
-     $order = $stmt->get_result()->fetch_assoc();
-     $stmt->close();
-     return $order; 
- } else {
-    return NULL;
- }
-}
-public function getallexpense() {
-       
-    $stmt = $this->conn->prepare(" SELECT `EID`, `name` FROM `expense` ");        
-  
-
-if ($stmt->execute()) {			
-    return $stmt;
- } else {
-    return NULL;
- }
-}
-
-
-
-public function getexpense_transaction($expensetrans_id) {
-       
-    $stmt = $this->conn->prepare("SELECT `ETID`, `fk_UID`, `fk_PID`, `fk_IID`, `cost`, `created_at` FROM `expense_transaction` WHERE ETID = ?");        
-$stmt->bind_param("i", $expensetrans_id);   
-
-if ($stmt->execute()) {			
-     $order = $stmt->get_result()->fetch_assoc();
-     $stmt->close();
-     return $order; 
- } else {
-    return NULL;
- }
-}
-
-
-
-
-
-public function getincome_transaction($incomereans_id) {
-       
-    $stmt = $this->conn->prepare("SELECT `ITID`, `fk_UID`, `fk_PID`, `fk_IID`, `created_at` FROM `income_transaction` WHERE ITID = ?");        
-$stmt->bind_param("i", $incomereans_id);   
-
-if ($stmt->execute()) {			
-     $order = $stmt->get_result()->fetch_assoc();
-     $stmt->close();
-     return $order; 
- } else {
-    return NULL;
- }
-}
-
-
-
-public function getproject($projecttid) {
-       
-    $stmt = $this->conn->prepare("SELECT `PID`, `number`, `city`, `client_name`, `client_phone`, `created_at` FROM `project` WHERE PID = ?");        
-$stmt->bind_param("i", $projecttid);   
-
-if ($stmt->execute()) {			
-     $order = $stmt->get_result()->fetch_assoc();
-     $stmt->close();
-     return $order; 
- } else {
-    return NULL;
- }
-}
-
-public function updateproject($projecttid,$number,$city,$client_name,$client_phone) {
-       
-    $stmt = $this->conn->prepare("UPDATE `project` SET `number`= ?,`city`= ?,`client_name`= ?,`client_phone`= ? WHERE PID = ?");        
-$stmt->bind_param("issii", $number,$city,$client_name,$client_phone,$projecttid);   
-$result = $stmt->execute();
-$stmt->close();
-// check for successful stores
-if ($result) {
- return true;
-} else {
- return false;
-}
-}
-
-
-
-
-
-
+		$data .= ", schedule = '$schedule' ";
+		if(isset($status))
+		$data .= ", status = '$status' ";
+		if(isset($id) && !empty($id))
+		$save = $this->db->query("UPDATE appointment_list set ".$data." where id = ".$id);
+		else
+		$save = $this->db->query("INSERT INTO appointment_list set ".$data);
+		if($save){
+			return json_encode(array('status'=>1));
+		}
+	}
+	function delete_appointment(){
+		extract($_POST);
+		$delete = $this->db->query("DELETE FROM appointment_list where id = ".$id);
+		if($delete)
+			return 1;
+	}
 
 
 }
