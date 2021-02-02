@@ -3,8 +3,8 @@
 require_once dirname(__FILE__, 2) . '/include/DB_Manage.php';
 $mng = new DB_Manage();
 
-if (!isset($_GET['id'])) {
-    header("Location: sign-in.php");
+if (!isset($_session['id'])) {
+    header("Location:index.php");
     die();
 } else {
 
