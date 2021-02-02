@@ -87,7 +87,7 @@ if (!isset($_session['id'])) {
                         
                         </div>
                         <div class="card mb-0 mt-4">
-                            <div class="card-header">Billings</div>
+                            <div class="card-header">My Appointments</div>
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-hover">
@@ -96,12 +96,12 @@ if (!isset($_session['id'])) {
                                                 <th scope="col" >Doctor Name</th>
                                                 <th scope="col">contact</th>
                                                 <th scope="col">Date</th>
-                                           
+                                                <th scope="col">status</th>
                                             </tr>
                                         </thead>
                                         <tbody>
 <?php           
-  $stmt1 = $mng->db->prepare("SELECT name,contact,schedule FROM users u INNER JOIN appointment_list a on a.doctor_id=u.id WHERE a.patient_id =" .$_session['id']);
+  $stmt1 = $mng->db->prepare("SELECT name,contact,schedule,status FROM users u INNER JOIN appointment_list a on a.doctor_id=u.id WHERE a.patient_id =" .$_session['id']);
     if ($stmt1->execute()) {
         $order1 = $stmt1->get_result()->fetch_all(MYSQLI_ASSOC);
         $stmt1->close();
@@ -112,6 +112,10 @@ foreach($order1 as $row) {
     echo "<td>".$row['name']."</td>";
     echo "<td>".$row['contact']."</td>";
     echo "<td>".$row['schedule']."</td>";
+if($row['status']==0)
+    echo "<td >Pending</td>";
+    else echo "<td>confirmed</td>";
+
     echo"</tr>";
    
 }
