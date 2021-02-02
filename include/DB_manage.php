@@ -3,13 +3,13 @@
 class DB_Manage {
      
      
-    private $db;
+    public $db;
 
     function __construct() {
         require_once 'DB_Connect.php';
         // connecting to database
         $db = new Db_Connect();
-        $this->db = $db->connect();
+         $this->db = $db->connect();
 
       
     }
