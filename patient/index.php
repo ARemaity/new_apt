@@ -1,14 +1,17 @@
 <?php
+  session_start();
+  ob_start();
+  $_session['id']=7;
 
 require_once dirname(__FILE__, 2) . '/include/DB_Manage.php';
 $mng = new DB_Manage();
 
 if (!isset($_session['id'])) {
-    header("Location:index.php");
+    header("Location:../index.php");
     die();
 } else {
 
-    $stmt = $mng->db->prepare("SELECT * FROM `users` WHERE id =" . $_GET['id']);
+    $stmt = $mng->db->prepare("SELECT * FROM `users` WHERE id =" .$_session['id']);
     if ($stmt->execute()) {
         $order = $stmt->get_result()->fetch_assoc();
         $stmt->close();
@@ -63,143 +66,25 @@ if (!isset($_session['id'])) {
                                 <form><label>Photo</label>
                                     <div class="form-group avatar-box d-flex align-items-center"><img
                                             src="http://medic-app-html.type-code.pro/assets/content/user-400-3.jpg"
-                                            width="100" height="100" alt="" class="rounded-500 mr-4"> <button
-                                            class="btn btn-outline-primary" type="button">Change photo<span
-                                                class="btn-icon icofont-ui-user ml-2"></span></button></div>
+                                            width="100" height="100" alt="" class="rounded-500 mr-4"> </div>
                                     <div class="form-group"><label>Full name</label> <input class="form-control"
-                                            type="text" placeholder="Full name" value="Liam Jouns"></div>
+                                            type="text" placeholder="Full name" value="<?php echo $order['name']; ?>"readonly="readonly"></div>
                                     <div class="form-group"><label>Id</label> <input class="form-control" type="text"
-                                            placeholder="Id" value="10021" readonly="readonly"></div>
+                                            placeholder="Id" value="<?php echo $order['id']; ?>" readonly="readonly"></div>
                                     <div class="row">
-                                        <div class="col-12 col-sm-6">
-                                            <div class="form-group"><label>Age</label> <input class="form-control"
-                                                    type="number" placeholder="Age" value="25"></div>
-                                        </div>
-                                        <div class="col-12 col-sm-6">
-                                            <div class="form-group"><label>Gender</label> <select class="selectpicker"
-                                                    title="Gender">
-                                                    <option>Male</option>
-                                                    <option selected="selected">Female</option>
-                                                </select></div>
-                                        </div>
+                                        
+                                       
                                     </div>
                                     <div class="form-group"><label>Phone number</label> <input class="form-control"
-                                            type="number" placeholder="Phone number" value="0126596578"></div>
+                                            type="text" placeholder="Full name" value="<?php echo $order['contact']; ?>"readonly="readonly"></div>
                                     <div class="form-group"><label>Address</label> <textarea class="form-control"
                                             placeholder="Address"
-                                            rows="3">71 Pilgrim Avenue Chevy Chase, MD 20815</textarea></div>
-                                    <div class="form-group"><label>Last visit</label> <input class="form-control"
-                                            type="text" placeholder="Last visit" value="18 Dec 2019"
-                                            readonly="readonly"></div>
-                                    <div class="form-group"><label>Status</label> <select class="selectpicker"
-                                            title="Status">
-                                            <option selected="selected">Approved</option>
-                                            <option>Pending</option>
-                                        </select></div><button type="button" class="btn btn-success btn-block">Save
-                                        changes</button>
+                                            rows="3" readonly="readonly" ><?php echo $order['address']; ?></textarea></div>
+                                   
+                                  
                                 </form>
                             </div>
-                            <div class="col col-12 col-md-6 mb-4">
-                                <div class="v-timeline dots">
-                                    <div class="line"></div>
-                                    <div class="timeline-box">
-                                        <div class="box-items">
-                                            <div class="item">
-                                                <div class="icon-block">
-                                                    <div class="item-icon bg-info"></div>
-                                                </div>
-                                                <div class="content-block">
-                                                    <div class="item-header">
-                                                        <h3 class="h5 item-title">New prescription</h3>
-                                                        <div class="item-date"><span>18 Dec 2019</span></div>
-                                                    </div>
-                                                    <div class="item-desc">Aenean lacinia bibendum nulla sed
-                                                        consectetur. Nullam id dolor id nibh ultricies vehicula ut id
-                                                        elit.</div>
-                                                </div>
-                                            </div>
-                                            <div class="item">
-                                                <div class="icon-block">
-                                                    <div class="item-icon bg-danger"></div>
-                                                </div>
-                                                <div class="content-block">
-                                                    <div class="item-header">
-                                                        <h3 class="h5 item-title">Appointment</h3>
-                                                        <div class="item-date"><span>5 Oct 2019</span></div>
-                                                    </div>
-                                                    <div class="item-desc">Lorem ipsum dolor sit amet, consectetur
-                                                        adipisicing elit. Voluptate.</div>
-                                                </div>
-                                            </div>
-                                            <div class="item">
-                                                <div class="icon-block">
-                                                    <div class="item-icon bg-warning"></div>
-                                                </div>
-                                                <div class="content-block">
-                                                    <div class="item-header">
-                                                        <h3 class="h5 item-title">Medication</h3>
-                                                        <div class="item-date"><span>1 Oct 2019</span></div>
-                                                    </div>
-                                                    <div class="item-desc">Lorem ipsum dolor sit amet, consectetur
-                                                        adipisicing elit. Consequuntur nam nisi veniam.</div>
-                                                </div>
-                                            </div>
-                                            <div class="item">
-                                                <div class="icon-block">
-                                                    <div class="item-icon"></div>
-                                                </div>
-                                                <div class="content-block">
-                                                    <div class="item-header">
-                                                        <h3 class="h5 item-title">Operation</h3>
-                                                        <div class="item-date"><span>23 Sep 2019</span></div>
-                                                    </div>
-                                                    <div class="item-desc">Aenean lacinia bibendum nulla sed
-                                                        consectetur. Nullam id dolor id nibh ultricies vehicula ut id
-                                                        elit.</div>
-                                                </div>
-                                            </div>
-                                            <div class="item">
-                                                <div class="icon-block">
-                                                    <div class="item-icon bg-dark"></div>
-                                                </div>
-                                                <div class="content-block">
-                                                    <div class="item-header">
-                                                        <h3 class="h5 item-title">Examination</h3>
-                                                        <div class="item-date"><span>10 Jul 2019</span></div>
-                                                    </div>
-                                                    <div class="item-desc">Lorem ipsum dolor sit.</div>
-                                                </div>
-                                            </div>
-                                            <div class="item">
-                                                <div class="icon-block">
-                                                    <div class="item-icon bg-success"></div>
-                                                </div>
-                                                <div class="content-block">
-                                                    <div class="item-header">
-                                                        <h3 class="h5 item-title">Examination</h3>
-                                                        <div class="item-date"><span>9 Jul 2019</span></div>
-                                                    </div>
-                                                    <div class="item-desc">Lorem ipsum dolor sit amet, consectetur
-                                                        adipisicing elit. Consequuntur nam nisi veniam.</div>
-                                                </div>
-                                            </div>
-                                            <div class="item">
-                                                <div class="icon-block">
-                                                    <div class="item-icon bg-warning"></div>
-                                                </div>
-                                                <div class="content-block">
-                                                    <div class="item-header">
-                                                        <h3 class="h5 item-title">Medication</h3>
-                                                        <div class="item-date"><span>30 Mar 2019</span></div>
-                                                    </div>
-                                                    <div class="item-desc">Lorem ipsum dolor sit amet, consectetur
-                                                        adipisicing elit. Consequuntur nam nisi veniam.</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        
                         </div>
                         <div class="card mb-0 mt-4">
                             <div class="card-header">Billings</div>
@@ -208,129 +93,40 @@ if (!isset($_session['id'])) {
                                     <table class="table table-hover">
                                         <thead>
                                             <tr class="bg-primary text-white">
-                                                <th scope="col" class="text-nowrap">Bill NO</th>
-                                                <th scope="col">Patient</th>
-                                                <th scope="col">Doctor</th>
+                                                <th scope="col" >Doctor Name</th>
+                                                <th scope="col">contact</th>
                                                 <th scope="col">Date</th>
-                                                <th scope="col">Charger</th>
-                                                <th scope="col">Tax</th>
-                                                <th scope="col">Discount</th>
-                                                <th scope="col">Total</th>
+                                           
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>
-                                                    <div class="text-muted">138</div>
-                                                </td>
-                                                <td>Liam Jouns</td>
-                                                <td>
-                                                    <div class="text-nowrap">Dr. Sophie</div>
-                                                </td>
-                                                <td>
-                                                    <div class="text-nowrap text-muted">18 Dec 2019</div>
-                                                </td>
-                                                <td>$155</td>
-                                                <td>10%</td>
-                                                <td>$5</td>
-                                                <td>$160</td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="text-muted">137</div>
-                                                </td>
-                                                <td>Liam Jouns</td>
-                                                <td>
-                                                    <div class="text-nowrap">Dr. Liam</div>
-                                                </td>
-                                                <td>
-                                                    <div class="text-nowrap text-muted">5 Oct 2019</div>
-                                                </td>
-                                                <td>$155</td>
-                                                <td>10%</td>
-                                                <td>$5</td>
-                                                <td>$160</td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="text-muted">136</div>
-                                                </td>
-                                                <td>Liam Jouns</td>
-                                                <td>
-                                                    <div class="text-nowrap">Dr. Noah</div>
-                                                </td>
-                                                <td>
-                                                    <div class="text-nowrap text-muted">1 Oct 2019</div>
-                                                </td>
-                                                <td>$155</td>
-                                                <td>10%</td>
-                                                <td>$5</td>
-                                                <td>$160</td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="text-muted">135</div>
-                                                </td>
-                                                <td>Liam Jouns</td>
-                                                <td>
-                                                    <div class="text-nowrap">Dr. Sophie</div>
-                                                </td>
-                                                <td>
-                                                    <div class="text-nowrap text-muted">23 Sep 2019</div>
-                                                </td>
-                                                <td>$155</td>
-                                                <td>10%</td>
-                                                <td>$5</td>
-                                                <td>$160</td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="text-muted">134</div>
-                                                </td>
-                                                <td>Liam Jouns</td>
-                                                <td>
-                                                    <div class="text-nowrap">Dr. Emma</div>
-                                                </td>
-                                                <td>
-                                                    <div class="text-nowrap text-muted">10 Jul 2019</div>
-                                                </td>
-                                                <td>$155</td>
-                                                <td>10%</td>
-                                                <td>$5</td>
-                                                <td>$160</td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="text-muted">133</div>
-                                                </td>
-                                                <td>Liam Jouns</td>
-                                                <td>
-                                                    <div class="text-nowrap">Dr. Emma</div>
-                                                </td>
-                                                <td>
-                                                    <div class="text-muted">9 Jul 2019</div>
-                                                </td>
-                                                <td>$155</td>
-                                                <td>10%</td>
-                                                <td>$5</td>
-                                                <td>$160</td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="text-muted">132</div>
-                                                </td>
-                                                <td>Liam Jouns</td>
-                                                <td>
-                                                    <div class="text-nowrap">Dr. Sophie</div>
-                                                </td>
-                                                <td>
-                                                    <div class="text-muted">30 Mar 2019</div>
-                                                </td>
-                                                <td>$155</td>
-                                                <td>10%</td>
-                                                <td>$5</td>
-                                                <td>$160</td>
-                                            </tr>
+<?php           
+  $stmt1 = $mng->db->prepare("SELECT name,contact,schedule FROM users u INNER JOIN appointment_list a on a.doctor_id=u.id WHERE a.patient_id =" .$_session['id']);
+    if ($stmt1->execute()) {
+        $order1 = $stmt1->get_result()->fetch_assoc();
+        $stmt1->close();
+    }
+                           
+
+
+
+
+    
+foreach($order1 as $row) {
+    echo"<tr>";
+
+    echo "<td>".print_r($row)."</td>";
+    echo "<td>".$row[1]."</td>";
+    echo "<td>".$row[2]."</td>";
+    echo"</tr>";
+   
+}
+
+                                    
+                                                ?>
+                                            
+                                           
+                                            
                                         </tbody>
                                     </table>
                                 </div>
@@ -396,18 +192,7 @@ if (!isset($_session['id'])) {
                         <div class="form-group"><input class="form-control" type="text" placeholder="Name"></div>
                         <div class="form-group"><input class="form-control" type="number" placeholder="Number"></div>
                         <div class="row">
-                            <div class="col-12 col-sm-6">
-                                <div class="form-group"><input class="form-control" type="number" placeholder="Age">
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-6">
-                                <div class="form-group"><select class="selectpicker" title="Gender">
-                                        <option class="d-none">Gender</option>
-                                        <option>Male</option>
-                                        <option>Female</option>
-                                    </select></div>
-                            </div>
-                        </div>
+                           
                         <div class="form-group mb-0"><textarea class="form-control" placeholder="Address"
                                 rows="3"></textarea></div>
                     </form>
