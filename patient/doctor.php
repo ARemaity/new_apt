@@ -5,7 +5,7 @@
 <?php
   session_start();
   ob_start();
-  $_session['id']=7;
+  
 
 require_once dirname(__FILE__, 2) . '/include/DB_Manage.php';
 $mng = new DB_Manage();
@@ -67,7 +67,7 @@ if (!isset($_session['id'])) {
                     <div class="page-content">
                         
                         <div class="card mb-0 mt-4">
-                            <div class="card-header">My Appointments</div>
+                            <div class="card-header">Doctors schedule : </div>
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table id="mytable" class="table table-hover">

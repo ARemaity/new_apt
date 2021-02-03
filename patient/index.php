@@ -1,13 +1,15 @@
 <?php
-  session_start();
-  ob_start();
-  $_session['id']=7;
+session_start();
+ob_start();
+ob_flush();
 
+//   $_session['id']=1;
 require_once dirname(__FILE__, 2) . '/include/DB_Manage.php';
 $mng = new DB_Manage();
 
 if (!isset($_session['id'])) {
     header("Location:../index.php");
+
     die();
 } else {
 
@@ -15,7 +17,7 @@ if (!isset($_session['id'])) {
     if ($stmt->execute()) {
         $order = $stmt->get_result()->fetch_assoc();
         $stmt->close();
-    }
+    }    }
 
     ?>
 
@@ -204,6 +206,6 @@ include 'info.php';
 </html>
 
 <?php
-}
+
 
 ?>

@@ -19,7 +19,7 @@ class DB_Manage {
         
     }
 
-    function login(){
+    function login1(){
 		extract($_POST);
 		$qry = $this->db->query("SELECT * FROM users where username = '".$username."' and password = '".$password."' ");
 		if($qry->num_rows > 0){
@@ -286,7 +286,21 @@ public function getinfo(){
 			 else {return false;}
 	}
 
-
+	public function login($username,$passwrod){
+		
+		$stmt = $this->db->prepare("SELECT `id`,`username`, `password`, `type` FROM `users` WHERE username ='".$username."' and password ='".$passwrod."'");  
+			
+		$result = $stmt->execute();	
+			if(!$result){
+			//error
+				die();
+			}
+		
+			 $order = $stmt->get_result()->fetch_assoc();
+			 $stmt->close();
+			return $order;
+		
+		}
 
 
 
