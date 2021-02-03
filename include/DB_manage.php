@@ -248,6 +248,58 @@ class DB_Manage {
 			return 1;
 	}
 
+public function getdocapt(){
+
+$stmt1 = $this->db->prepare(" SELECT u.id,u.name , u.contact , d.day , d.time_from ,d.time_to ,m.specialty FROM users u INNER JOIN doctors_schedule d on u.id = d.doctor_id INNER JOIN medical_specialty m on u.id = m.fk_UID ");
+    if ($stmt1->execute()) {
+        $order1 = $stmt1->get_result()->fetch_all(MYSQLI_ASSOC);
+		$stmt1->close();
+		return $order1;
+    }
+         else {return false;}
+}
+	
+
+
+		 public function insapt($docid,$patientid,$schedule){
+
+			$stmt1 = $this->db->prepare("INSERT INTO `appointment_list`(`id`, `doctor_id`, `patient_id`, `schedule`, `status`, `date_created`) VALUES (Null,$docid,$patientid,NOW(),0,NOW())");
+				if ($stmt1->execute()) {
+					
+					$stmt1->close();
+					return 1;
+				}
+					 else {return 0;}
+
+
+}
+
+
+public function getinfo(){
+
+	$stmt1 = $this->db->prepare("SELECT * FROM `system_tbl` WHERE id = 1");
+		if ($stmt1->execute()) {
+			$order1 = $stmt1->get_result()->fetch_assoc();
+			$stmt1->close();
+			return $order1;
+		}
+			 else {return false;}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
 

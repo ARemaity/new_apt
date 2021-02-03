@@ -1,30 +1,38 @@
-<?php
-    session_start();
-    ob_start();
-    include('header.php');
-    include('admin/db_connect.php');
+<div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       <p id="parm">
+       <?php 
+$result = $mng->getinfo();
 
-	$query = $conn->query("SELECT * FROM system_settings limit 1")->fetch_array();
-	foreach ($query as $key => $value) {
-		if(!is_numeric($key))
-			$_SESSION['setting_'.$key] = $value;
-	}
-    ob_end_flush();
-    ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Info </title>
-</head>
-<body>
-    
-<section class="page-section">
-        <div class="container">
-    <?php echo html_entity_decode($_SESSION['setting_about_content']) ?>        
-            
-        </div>
-        </section>
-</body>
-</html>
+echo $result['about_content'];
+
+
+?>            
+       
+       </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+$(document).ready(function(){
+  $("#p").click(function(){
+    $('#exampleModal1').modal('show'); 
+  });
+});
+</script>
+
+

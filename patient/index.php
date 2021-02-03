@@ -174,74 +174,9 @@ if($row['status']==0)
             <div class="content-overlay"></div>
         </div>
     </div><!-- Add patients modals -->
-    <div class="modal fade" id="add-patient" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Add new patient</h5>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group avatar-box d-flex"><img
-                                src="http://medic-app-html.type-code.pro/assets/content/anonymous-400.jpg" width="40"
-                                height="40" alt="" class="rounded-500 mr-4"> <button class="btn btn-outline-primary"
-                                type="button">Select image<span class="btn-icon icofont-ui-user ml-2"></span></button>
-                        </div>
-                        <div class="form-group"><input class="form-control" type="text" placeholder="Name"></div>
-                        <div class="form-group"><input class="form-control" type="number" placeholder="Number"></div>
-                        <div class="row">
-                           
-                        <div class="form-group mb-0"><textarea class="form-control" placeholder="Address"
-                                rows="3"></textarea></div>
-                    </form>
-                </div>
-                <div class="modal-footer d-block">
-                    <div class="actions justify-content-between"><button type="button" class="btn btn-error"
-                            data-dismiss="modal">Cancel</button> <button type="button" class="btn btn-info">Add
-                            patient</button></div>
-                </div>
-            </div>
-        </div>
-    </div><!-- end Add patients modals -->
+  
     <!-- Add patients modals -->
-    <div class="modal fade" id="settings" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Application's settings</h5>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group"><label>Layout</label> <select class="selectpicker" title="Layout"
-                                id="layout">
-                                <option value="horizontal-layout">Horizontal</option>
-                                <option value="vertical-layout">Vertical</option>
-                            </select></div>
-                        <div class="form-group"><label>Light/dark topbar</label>
-                            <div class="custom-control custom-switch"><input type="checkbox"
-                                    class="custom-control-input" id="topbar"> <label class="custom-control-label"
-                                    for="topbar"></label></div>
-                        </div>
-                        <div class="form-group"><label>Light/dark sidebar</label>
-                            <div class="custom-control custom-switch"><input type="checkbox"
-                                    class="custom-control-input" id="sidebar"> <label class="custom-control-label"
-                                    for="sidebar"></label></div>
-                        </div>
-                        <div class="form-group mb-0"><label>Boxed/fullwidth mode</label>
-                            <div class="custom-control custom-switch"><input type="checkbox"
-                                    class="custom-control-input" id="boxed" checked="checked"> <label
-                                    class="custom-control-label" for="boxed"></label></div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer d-block">
-                    <div class="actions justify-content-between"><button type="button" class="btn btn-secondary"
-                            data-dismiss="modal">Cancel</button> <button id="reset-to-default" type="button"
-                            class="btn btn-error">Reset to default</button></div>
-                </div>
-            </div>
-        </div>
-    </div><!-- end Add patients modals -->
+   
     <script src="assets/js/jquery-3.3.1.min.js"></script>
     <script src="assets/js/jquery-migrate-1.4.1.min.js"></script>
     <script src="assets/js/popper.min.js"></script>
@@ -256,6 +191,14 @@ if($row['status']==0)
     <script src="assets/js/echarts.min.js"></script>
     <script src="assets/js/echarts-gl.min.js"></script>
     <script src="assets/js/main.js"></script>
+
+
+
+    <?php 
+
+include 'info.php';
+?>
+
 </body>
 
 </html>

@@ -8,9 +8,10 @@
 						<nav class="main-menu-wrap">
 							<ul class="menu-ul">
 								
-								<li class="menu-item"><a class="item-link" href="index.php"> <span class="link-text">Profile</span></a></li>
-								<li class="menu-item"><a class="item-link" href="doctor.php"> <span class="link-text">Doctor List</span></a></li>
-								<li class="menu-item"><a class="item-link" href="info.php"> <span class="link-text">Info</span></a></li>
+								<li class="menu-item"><a class="item-link" href="patient/index.php"> <span class="link-text">Profile</span></a></li>
+								<li class="menu-item"><a class="item-link" href="patient/doctor.php"> <span class="link-text">Doctor List</span></a></li>
+								<li class="menu-item"><a id="p"  href="javascript:void(0);" class="item-link" > <span class="link-text">Info</span></a></li>
+								<li class="menu-item"><a class="item-link" href="index.php"> <span class="link-text">LOGOUT</span></a></li>
 							</ul>
 						</nav>
 					</div>
@@ -18,3 +19,7 @@
 				
 				</div>
 			</div><!-- end Vertical navbar -->
+
+
+
+			<!-- Modal -->
