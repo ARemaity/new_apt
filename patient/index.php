@@ -3,17 +3,17 @@ session_start();
 ob_start();
 ob_flush();
 
-//   $_session['id']=1;
+//   $_SESSION['id']=1;
 require_once dirname(__FILE__, 2) . '/include/DB_Manage.php';
 $mng = new DB_Manage();
 
-if (!isset($_session['id'])) {
+if (!isset($_SESSION['id'])) {
     header("Location:../index.php");
 
     die();
 } else {
 
-    $stmt = $mng->db->prepare("SELECT * FROM `users` WHERE id =" .$_session['id']);
+    $stmt = $mng->db->prepare("SELECT * FROM `users` WHERE id =" .$_SESSION['id']);
     if ($stmt->execute()) {
         $order = $stmt->get_result()->fetch_assoc();
         $stmt->close();
@@ -103,7 +103,7 @@ if (!isset($_session['id'])) {
                                         </thead>
                                         <tbody>
 <?php           
-  $stmt1 = $mng->db->prepare("SELECT name,contact,schedule,status FROM users u INNER JOIN appointment_list a on a.doctor_id=u.id WHERE a.patient_id =" .$_session['id']);
+  $stmt1 = $mng->db->prepare("SELECT name,contact,schedule,status FROM users u INNER JOIN appointment_list a on a.doctor_id=u.id WHERE a.patient_id =" .$_SESSION['id']);
     if ($stmt1->execute()) {
         $order1 = $stmt1->get_result()->fetch_all(MYSQLI_ASSOC);
         $stmt1->close();

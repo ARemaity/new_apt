@@ -10,12 +10,12 @@
 require_once dirname(__FILE__, 2) . '/include/DB_Manage.php';
 $mng = new DB_Manage();
 
-if (!isset($_session['id'])) {
+if (!isset($_SESSION['id'])) {
     header("Location:../index.php");
     die();}
 // } else {
 
-//     $stmt = $mng->db->prepare("SELECT * FROM `users` WHERE id =" .$_session['id']);
+//     $stmt = $mng->db->prepare("SELECT * FROM `users` WHERE id =" .$_SESSION['id']);
 //     if ($stmt->execute()) {
 //         $order = $stmt->get_result()->fetch_assoc();
 //         $stmt->close();

@@ -1,7 +1,7 @@
 <?php
 session_start();
 ob_start();
-ob_flush();
+
 require_once  'include/DB_Manage.php';
 $mng = new DB_Manage();
 
@@ -14,16 +14,16 @@ if (!empty($order)) {
 
 	
 if($order['type']==1){
-	$_session['id']=$order['id'];
+	$_SESSION['id']=$order['id'];
 	 header("Location: admin.php"); 
 	
 }elseif($order['type']==2){
-	$_session['id']=$order['id'];
+	$_SESSION['id']=$order['id'];
 	header("Location: doctor.php"); 
 						  }elseif($order['type']==3){
 	
 	
-	$_session['id']=$order['id'];
+							$_SESSION['id']=$order['id'];
 	header("Location:patient/index.php");
 	
 	
