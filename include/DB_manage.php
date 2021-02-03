@@ -274,7 +274,6 @@ $stmt1 = $this->db->prepare(" SELECT u.id,u.name , u.contact , d.day , d.time_fr
 
 }
 
-
 public function getinfo(){
 
 	$stmt1 = $this->db->prepare("SELECT * FROM `system_tbl` WHERE id = 1");
@@ -304,9 +303,27 @@ public function getinfo(){
 
 
 
+		public function getsched(){
 
+			$stmt1 = $this->db->prepare(" SELECT m.id,name,contact,schedule,status,date_created FROM users u INNER JOIN appointment_list m on u.id = m.patient_id  WHERE m.doctor_id =" .$_SESSION['id']);
+				if ($stmt1->execute()) {
+					$order1 = $stmt1->get_result()->fetch_all(MYSQLI_ASSOC);
+					$stmt1->close();
+					return $order1;
+				}
+					 else {return false;}
+			}
 
-
+			public function confirmapt($id){
+			
+				$stmt1 = $this->db->prepare(" UPDATE `appointment_list` SET `status`=1 WHERE id=".$id);
+					if ($stmt1->execute()) {
+						
+						$stmt1->close();
+						return 1;
+					}
+						 else {return 0;}
+				}
 
 
 

@@ -8,9 +8,9 @@
 						<nav class="main-menu-wrap">
 							<ul class="menu-ul">
 								
-								<li class="menu-item"><a class="item-link" href="patient/index.php"> <span class="link-text">Profile</span></a></li>
-								<li class="menu-item"><a class="item-link" href="patient/doctor.php"> <span class="link-text">Doctor List</span></a></li>
-								<li class="menu-item"><a id="p"  href="javascript:void(0);" class="item-link" > <span class="link-text">Info</span></a></li>
+								<li class="menu-item"><a class="item-link" href="doctor/index.php"> <span class="link-text">Profile</span></a></li>
+								<li class="menu-item"><a class="item-link" href="doctor/sched.php"> <span class="link-text">Schedule</span></a></li>
+							
 								<li class="menu-item"><a class="item-link" href="logout.php"> <span class="link-text">LOGOUT</span></a></li>
 							</ul>
 						</nav>
