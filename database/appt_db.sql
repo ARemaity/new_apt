@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 02, 2021 at 07:51 PM
--- Server version: 10.4.14-MariaDB
--- PHP Version: 7.4.10
+-- Generation Time: Feb 04, 2021 at 07:12 PM
+-- Server version: 10.4.13-MariaDB
+-- PHP Version: 7.4.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -41,9 +41,19 @@ CREATE TABLE `appointment_list` (
 --
 
 INSERT INTO `appointment_list` (`id`, `doctor_id`, `patient_id`, `schedule`, `status`, `date_created`) VALUES
-(5, 2, 7, '2020-09-30 11:00:00', 1, '2020-09-24 15:20:52'),
-(7, 2, 7, '2020-09-28 10:00:00', 2, '2020-09-24 16:39:00'),
-(9, 2, 7, '2020-10-12 13:00:00', 0, '2020-09-24 16:43:21');
+(10, 2, 1, '2021-02-03 14:10:18', 1, '2021-02-03 14:10:18'),
+(11, 2, 7, '2021-02-03 14:39:52', 0, '2021-02-03 14:39:52'),
+(12, 1, 8, '2021-02-03 14:40:03', 0, '2021-02-03 14:40:03'),
+(13, 2, 9, '2021-02-03 14:44:00', 1, '2021-02-03 14:44:00'),
+(14, 2, 8, '2021-02-03 14:57:17', 1, '2021-02-03 14:57:17'),
+(26, 2, 7, '2021-02-04 18:55:23', 0, '2021-02-04 18:55:23'),
+(27, 10, 7, '2021-02-04 18:55:50', 0, '2021-02-04 18:55:50'),
+(28, 2, 7, '2021-02-04 18:58:54', 0, '2021-02-04 18:58:54'),
+(29, 2, 12, '2021-02-04 18:59:55', 0, '2021-02-04 18:59:55'),
+(30, 10, 12, '2021-02-04 19:00:08', 1, '2021-02-04 19:00:08'),
+(31, 19, 20, '2021-02-04 19:22:08', 1, '2021-02-04 19:22:08'),
+(32, 2, 20, '2021-02-04 19:24:51', 0, '2021-02-04 19:24:51'),
+(33, 2, 20, '2021-02-04 19:25:56', 0, '2021-02-04 19:25:56');
 
 -- --------------------------------------------------------
 
@@ -70,7 +80,10 @@ INSERT INTO `doctors_schedule` (`id`, `doctor_id`, `day`, `time_from`, `time_to`
 (6, 3, 'Tuesday', '10:00:00', '15:00:00'),
 (7, 3, 'Wednesday', '10:00:00', '15:00:00'),
 (8, 3, 'Thursday', '10:00:00', '15:00:00'),
-(9, 3, 'Friday', '10:00:00', '15:00:00');
+(9, 3, 'Friday', '10:00:00', '15:00:00'),
+(10, 10, 'Friday', '10:00:00', '15:00:00'),
+(11, 10, 'Thursday', '10:00:00', '15:00:00'),
+(19, 19, 'Friday', '10:00:00', '15:00:00');
 
 -- --------------------------------------------------------
 
@@ -89,8 +102,9 @@ CREATE TABLE `medical_specialty` (
 --
 
 INSERT INTO `medical_specialty` (`id`, `fk_UID`, `specialty`) VALUES
-(2, 0, 'Y'),
-(3, 0, 'X');
+(2, 2, 'dumm2'),
+(3, 10, 'X'),
+(6, 19, 'massage');
 
 -- --------------------------------------------------------
 
@@ -111,7 +125,7 @@ CREATE TABLE `system_tbl` (
 --
 
 INSERT INTO `system_tbl` (`id`, `name`, `email`, `contact`, `about_content`) VALUES
-(1, 'Doctor&#x2019;s Appointment System', 'info@sample.com', '+6948 8542 623', '&lt;p style=&quot;text-align: center; background: transparent; position: relative;&quot;&gt;&lt;span style=&quot;font-size:28px;background: transparent; position: relative;&quot;&gt;ABOUT US&lt;/span&gt;&lt;/b&gt;&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center; background: transparent; position: relative;&quot;&gt;&lt;span style=&quot;background: transparent; position: relative; font-size: 14px;&quot;&gt;&lt;span style=&quot;font-size:28px;background: transparent; position: relative;&quot;&gt;&lt;b style=&quot;margin: 0px; padding: 0px; color: rgb(0, 0, 0); font-family: &amp;quot;Open Sans&amp;quot;, Arial, sans-serif; text-align: justify;&quot;&gt;Lorem Ipsum&lt;/b&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-family: &amp;quot;Open Sans&amp;quot;, Arial, sans-serif; font-weight: 400; text-align: justify;&quot;&gt;&amp;nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&amp;#x2019;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.&lt;/span&gt;&lt;br&gt;&lt;/span&gt;&lt;/b&gt;&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center; background: transparent; position: relative;&quot;&gt;&lt;span style=&quot;background: transparent; position: relative; font-size: 14px;&quot;&gt;&lt;span style=&quot;font-size:28px;background: transparent; position: relative;&quot;&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-family: &amp;quot;Open Sans&amp;quot;, Arial, sans-serif; font-weight: 400; text-align: justify;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/b&gt;&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center; background: transparent; position: relative;&quot;&gt;&lt;span style=&quot;background: transparent; position: relative; font-size: 14px;&quot;&gt;&lt;span style=&quot;font-size:28px;background: transparent; position: relative;&quot;&gt;&lt;h2 style=&quot;font-size:28px;background: transparent; position: relative;&quot;&gt;Where does it come from?&lt;/h2&gt;&lt;p style=&quot;text-align: center; margin-bottom: 15px; padding: 0px; color: rgb(0, 0, 0); font-family: &amp;quot;Open Sans&amp;quot;, Arial, sans-serif; font-weight: 400;&quot;&gt;Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of &quot;de Finibus Bonorum et Malorum&quot; (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, &quot;Lorem ipsum dolor sit amet..&quot;, comes from a line in section 1.10.32.&lt;/p&gt;&lt;/span&gt;&lt;/b&gt;&lt;/span&gt;&lt;/p&gt;');
+(1, 'Doctor&#x2019;s Appointment System', 'info@sample.com', '+6948 8542 623', '                        asdasdasdasdasd        \r\n                        asdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbbbbbbBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB');
 
 -- --------------------------------------------------------
 
@@ -135,9 +149,11 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `address`, `contact`, `username`, `password`, `type`) VALUES
 (1, 'Administrator', '', '', 'admin@gmail.com', 'admin123', 1),
-(7, 'George Wilson', 'Sample Only', '+18456-5455-55', 'gwilson@sample.com', 'asd123', 3),
-(9, 'DR.James Smith, M.D.', 'Sample Clinic Address', '+1456 554 55623', 'jsmith@sample.com', 'jsmith123', 2),
-(10, 'DR.Claire Blake, M.D.', 'Sample Only', '+5465 555 623', 'cblake@sample.com', 'blake123', 2);
+(2, 'DR.James Smith, M.D.1', 'Sample Clinic Address', '+1456 554 55623', 'jsmith@sample.com', 'jsmith123', 2),
+(10, 'DR.Claire Blake, M.D.', 'Sample Only', '+5465 555 6232333333', 'cblake@sample.com', 'blake1231t', 2),
+(16, 'asd', 'asd23', '7415466', 'alikkk', 'password', 3),
+(17, 'asd', 'ads', 'asd', 'asd', 'asd', 3),
+(20, 'bruce', 'oldyork', '756669122', 'bruces', 'passwordds', 3);
 
 --
 -- Indexes for dumped tables
@@ -181,19 +197,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `appointment_list`
 --
 ALTER TABLE `appointment_list`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `doctors_schedule`
 --
 ALTER TABLE `doctors_schedule`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `medical_specialty`
 --
 ALTER TABLE `medical_specialty`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `system_tbl`
@@ -205,7 +221,7 @@ ALTER TABLE `system_tbl`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
