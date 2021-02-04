@@ -176,7 +176,7 @@ foreach($order1 as $row) {
 					
 				</div>
 				<div class="modal-footer d-block">
-					<div class="actions justify-content-between"><button type="button" id="delete" class="btn btn-error" data-dismiss="modal">Delete </button> <button type="Submit" class="btn btn-info">Add appointment</button></div>
+					<div class="actions justify-content-between"><button type="button" id="delete" class="btn btn-error" data-dismiss="modal">Cancel </button> <button type="Submit" class="btn btn-info">Add appointment</button></div>
 				</div></form>
 			</div>
 		</div>
@@ -214,7 +214,7 @@ $("#myform").on('submit', function (event) {
 
 
             if (response == '1') {
-                console.log('nice');
+                location.reload();
 
             } else {
 

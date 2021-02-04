@@ -6,7 +6,7 @@
   session_start();
   ob_start();
   
-  $_SESSION['id']=7;
+  
 require_once dirname(__FILE__, 2) . '/include/DB_Manage.php';
 $mng = new DB_Manage();
 
@@ -209,12 +209,10 @@ foreach($order1 as $row) {
 </script>
 
 
-<?php 
+<?php
+include 'layout/infoc.php';
 
-include 'info.php';
 ?>
-
-
 
 
 

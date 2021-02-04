@@ -15,11 +15,12 @@ if (!empty($order)) {
 	
 if($order['type']==1){
 	$_SESSION['id']=$order['id'];
-	 header("Location: admin.php"); 
+	 header("Location:admin/index.php"); 
 	
 }elseif($order['type']==2){
 	$_SESSION['id']=$order['id'];
-	header("Location: doctor.php"); 
+	header("Location:doctor/index.php");
+	die(); 
 						  }elseif($order['type']==3){
 	
 	

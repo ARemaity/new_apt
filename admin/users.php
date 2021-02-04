@@ -256,7 +256,7 @@ $("#myform").on('submit', function (event) {
 
 
             if (response == '1') {
-                console.log('nice');
+                location.reload();
 
             } else {
 
@@ -348,7 +348,10 @@ $("#adduser").click(function(e) {
 </script>
 
 
+<?php
+include 'layout/infoc.php';
 
+?>
 
 
 

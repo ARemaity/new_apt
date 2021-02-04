@@ -333,7 +333,10 @@ $("#adduser").click(function(e) {
 
 </script>
 
+<?php
+include 'layout/infoc.php';
 
+?>
 
 
 

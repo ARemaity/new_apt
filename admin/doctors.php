@@ -181,7 +181,7 @@ foreach($order1 as $row) {
 					
 				</div>
 				<div class="modal-footer d-block">
-					<div class="actions justify-content-between"><button type="button" id="delete" class="btn btn-error" >Delete User</button> <button type="Submit" name="Submit" class="btn btn-info">Update User</button></div>
+					<div class="actions justify-content-between"><button type="button" id="delete" class="btn btn-error" >Delete Doctor</button> <button type="Submit" name="Submit" class="btn btn-info">Update Doctor</button></div>
 				</div>
                 
                 </form>
@@ -216,7 +216,7 @@ foreach($order1 as $row) {
 					
 				</div>
 				<div class="modal-footer d-block">
-					<div class="actions justify-content-between"><button type="button" class="btn btn-error" data-dismiss="modal">Cancel</button> <button type="Submit" name="Submit" class="btn btn-info">add User</button></div>
+					<div class="actions justify-content-between"><button type="button" class="btn btn-error" data-dismiss="modal">Cancel</button> <button type="Submit" name="Submit" class="btn btn-info">add Doctor</button></div>
 				</div>
                 
                 </form>
@@ -347,7 +347,10 @@ $("#adduser").click(function(e) {
 
 </script>
 
+<?php
+include 'layout/infoc.php';
 
+?>
 
 
 

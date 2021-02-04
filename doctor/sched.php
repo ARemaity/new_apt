@@ -207,7 +207,7 @@ $("#myform").on('submit', function (event) {
 
 
             if (response == '1') {
-                console.log('nice');
+                location.reload();
 
             } else {
 

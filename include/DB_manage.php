@@ -337,8 +337,10 @@ public function getinfo(){
 
 					public function updateuser($id,$name,$address,$contact,$username,$password,$type){
 
-						$stmt1 = $this->db->prepare("UPDATE `users` SET `id`=$id,`name`='$name',`address`='$address',`contact`=$contact,`username`='$username',`password`='$password',`type`=$type WHERE id=$id");
+						$stmt1 = $this->db->prepare("UPDATE `users` SET `id`=?,`name`=?,`address`=?,`contact`=?,`username`=?,`password`=?,`type`=? WHERE id =$id");
+						$stmt1->bind_param("isssssi",$id,$name,$address,$contact,$username,$password,$type);  
 							if ($stmt1->execute()) {
+
 							
 								$stmt1->close();
 								return 1;
@@ -432,9 +434,18 @@ public function getinfo(){
 																 else {return 0;}
 														}
 
+														
 
+														public function updateinfo($id,$info){
 
-
+															$stmt1 = $this->db->prepare("UPDATE `system_tbl` SET `about_content`='$info' WHERE id=$id");
+																if ($stmt1->execute()) {
+																
+																	$stmt1->close();
+																	return 1;
+																}
+																	 else {return 0;}
+															}
 
 
 

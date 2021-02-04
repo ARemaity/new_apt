@@ -3,7 +3,7 @@ session_start();
 ob_start();
 ob_flush();
 
- $_SESSION['id']=1;
+
 require_once dirname(__FILE__, 2) . '/include/DB_Manage.php';
 $mng = new DB_Manage();
 
