@@ -388,6 +388,56 @@ public function getinfo(){
 										}
 
 
+										public function getsp(){
+
+											$stmt1 = $this->db->prepare("SELECT * FROM `medical_specialty`");
+												if ($stmt1->execute()) {
+													$order1 = $stmt1->get_result()->fetch_all(MYSQLI_ASSOC);
+													$stmt1->close();
+													return $order1;
+												}
+													 else {return false;}
+											}
+	
+											public function addsp($doid,$spcl){
+
+												$stmt1 = $this->db->prepare("INSERT INTO `medical_specialty`(`id`, `fk_UID`, `specialty`) VALUES (NULL,$doid,'$spcl')");
+													if ($stmt1->execute()) {
+													
+														$stmt1->close();
+														return 1;
+													}
+														 else {return 0;}
+												}
+												
+
+												public function deletesp($id){
+
+													$stmt1 = $this->db->prepare("DELETE FROM `medical_specialty` WHERE id=$id");
+														if ($stmt1->execute()) {
+														
+															$stmt1->close();
+															return 1;
+														}
+															 else {return 0;}
+													}
+													public function updatesp($id,$docid,$speciality){
+
+														$stmt1 = $this->db->prepare("UPDATE `medical_specialty` SET `id`=$id,`fk_UID`=$docid,`specialty`='$speciality' WHERE id=$id");
+															if ($stmt1->execute()) {
+															
+																$stmt1->close();
+																return 1;
+															}
+																 else {return 0;}
+														}
+
+
+
+
+
+
+
 
 }
 

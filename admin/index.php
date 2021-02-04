@@ -140,7 +140,7 @@ if (!isset($_SESSION['id'])) {
     </div><!-- Add patients modals -->
   
     <!-- Add patients modals -->
-   
+
     <script src="assets/js/jquery-3.3.1.min.js"></script>
     <script src="assets/js/jquery-migrate-1.4.1.min.js"></script>
     <script src="assets/js/popper.min.js"></script>
@@ -158,16 +158,11 @@ if (!isset($_SESSION['id'])) {
 
 
 
-    <?php 
+    <?php
+include 'layout/infoc.php';
 
-include 'info.php';
 ?>
-
 </body>
 
 </html>
 
-<?php
-
-
-?>

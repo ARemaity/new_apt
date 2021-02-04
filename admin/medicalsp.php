@@ -62,19 +62,19 @@ if (!isset($_SESSION['id'])) {
                 <div class="app-loader"><i class="icofont-spinner-alt-4 rotate"></i></div>
                 <div class="main-content-wrap">
                     <header class="page-header">
-                        <h1 class="page-title">users List</h1>
-                        <button type="button" id="adduser" class="btn " >Add user</button>
+                        <h1 class="page-title">Speciality List</h1>
+                        <button type="button" id="adduser" class="btn " >Add Speciality</button>
                     </header>
                     <div class="page-content">
                         
                         <div class="card mb-0 mt-4">
-                            <div class="card-header">All users: </div>
+                            <div class="card-header">All Speciality: </div>
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table id="mytable" class="table table-hover">
                                         <thead>
                                             <tr class="bg-primary text-white">
-                                            <th scope="col">ID</th>
+                                           
                                                 <th scope="col" >ID</th>
                                                 <th scope="col">Doctor ID</th>
                                                 <th scope="col">Speciality</th>
@@ -83,7 +83,7 @@ if (!isset($_SESSION['id'])) {
                                         </thead>
                                         <tbody>
 <?php           
-$order1=$mng->getusers();
+$order1=$mng->getsp();
 
     
                  
@@ -158,14 +158,11 @@ foreach($order1 as $row) {
                 
 				</div>
 				<div class="modal-body">
-					<form id="myform" action="admin/action/ud.php" method="POST">
+					<form id="myform" action="admin/action/updatesp.php" method="POST">
                         <div class="form-group">ID :<input id="id" name="id" class="form-control" type="text" placeholder="Name" value=""></div>
-						<div class="form-group">Name :<input id="name" name="name" class="form-control" type="text" placeholder="Name" value=""></div>
-                        <div class="form-group">Address :<input id="address" name="address" class="form-control" type="text" placeholder="address"></div>
-                        <div class="form-group">Contact : <input id="contact" name="contact" class="form-control"  ></div>
-                        <div class="form-group">Username : <input id="username" name="username" class="form-control"  ></div>
-						<div class="form-group">Password : <input id="password" name="password" class="form-control" type="text" placeholder="password"></div>
-						<div class="form-group">Type :<input id="type" name="type" class="form-control" type="text" placeholder="Date"></div>
+						<div class="form-group">Doctor id :<input id="docid" name="docid" class="form-control" type="text" placeholder="Name" value=""></div>
+                        <div class="form-group">Speciality :<input id="speciality" name="speciality" class="form-control" type="text" placeholder="address"></div>
+                       
 						<div class="row">
 							<div class="col-12 col-sm-6">
 								
@@ -176,7 +173,7 @@ foreach($order1 as $row) {
 					
 				</div>
 				<div class="modal-footer d-block">
-					<div class="actions justify-content-between"><button type="button" id="delete" class="btn btn-error" >Delete User</button> <button type="Submit" name="Submit" class="btn btn-info">Update User</button></div>
+					<div class="actions justify-content-between"><button type="button" id="delete" class="btn btn-error" >Delete Speciality</button> <button type="Submit" name="Submit" class="btn btn-info">Update Speciality</button></div>
 				</div>
                 
                 </form>
@@ -193,14 +190,11 @@ foreach($order1 as $row) {
                 
 				</div>
 				<div class="modal-body">
-					<form id="addform" action="admin/action/adduser.php" method="POST">
-                        <div class="form-group">ID :<input id="id" name="id" class="form-control" type="text" placeholder="Name" value="auto" readonly></div>
-						<div class="form-group">Name :<input id="name" name="name" class="form-control" type="text" placeholder="Name" value=""></div>
-                        <div class="form-group">Address :<input id="address" name="address" class="form-control" type="text" placeholder="address"></div>
-                        <div class="form-group">Contact : <input id="contact" name="contact" class="form-control"  ></div>
-                        <div class="form-group">Username : <input id="username" name="username" class="form-control"  ></div>
-						<div class="form-group">Password : <input id="password" name="password" class="form-control" type="text" placeholder="password" ></div>
-						<div class="form-group">Type :<input id="type" name="type" class="form-control" type="text" placeholder="Date" value="3" readonly></div>
+					<form id="addform" action="admin/action/addsp.php" method="POST">
+                        <div class="form-group">ID :<input id="id" name="id" class="form-control" type="text" placeholder="id" value="auto" readonly></div>
+						<div class="form-group">Doc ID :<input id="name" name="docid" class="form-control" type="text" placeholder="doc id" value=""></div>
+                        <div class="form-group">Speciality :<input id="address" name="speciality" class="form-control" type="text" placeholder="speciality"></div>
+                        
 						<div class="row">
 							<div class="col-12 col-sm-6">
 								
@@ -211,7 +205,7 @@ foreach($order1 as $row) {
 					
 				</div>
 				<div class="modal-footer d-block">
-					<div class="actions justify-content-between"><button type="button" class="btn btn-error" data-dismiss="modal">Cancel</button> <button type="Submit" name="Submit" class="btn btn-info">add User</button></div>
+					<div class="actions justify-content-between"><button type="button" class="btn btn-error" data-dismiss="modal">Cancel</button> <button type="Submit" name="Submit" class="btn btn-info">add Speciality</button></div>
 				</div>
                 
                 </form>
@@ -251,7 +245,7 @@ $("#myform").on('submit', function (event) {
 
 
             if (response == '1') {
-                console.log('nice');
+                location.reload();
 
             } else {
 
@@ -267,12 +261,9 @@ $("#myform").on('submit', function (event) {
     // alert($tds.eq(1).text());  
     $('#id').val($tds.eq(0).text());
     did=$tds.eq(0).text();
-    $('#name').val($tds.eq(1).text());
-    $('#address').val($tds.eq(2).text());
-    $('#contact').val($tds.eq(3).text());
-    $('#username').val($tds.eq(4).text());
-    $('#password').val($tds.eq(5).text());
-    $('#type').val($tds.eq(6).text());
+    $('#docid').val($tds.eq(1).text());
+    $('#speciality').val($tds.eq(2).text());
+    
     $('#exampleModal').modal('show');       // Prints out the text within the <td>
 
 });
@@ -280,7 +271,7 @@ $("#myform").on('submit', function (event) {
 $("#delete").click(function(e) {
     event.preventDefault();
 $.ajax({   
-                            url: "admin/action/deleteuser.php",
+                            url: "admin/action/deletesp.php",
                             type: "POST",
 							data: { id:did},
                             dataType: 'json',
