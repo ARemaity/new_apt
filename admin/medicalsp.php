@@ -62,40 +62,37 @@ if (!isset($_SESSION['id'])) {
                 <div class="app-loader"><i class="icofont-spinner-alt-4 rotate"></i></div>
                 <div class="main-content-wrap">
                     <header class="page-header">
-                        <h1 class="page-title">Doctors List</h1>
+                        <h1 class="page-title">users List</h1>
+                        <button type="button" id="adduser" class="btn " >Add user</button>
                     </header>
                     <div class="page-content">
                         
                         <div class="card mb-0 mt-4">
-                            <div class="card-header">Doctors schedule : </div>
+                            <div class="card-header">All users: </div>
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table id="mytable" class="table table-hover">
                                         <thead>
                                             <tr class="bg-primary text-white">
-                                                <th scope="col" >Doctor Name</th>
-                                                <th scope="col">Specialty</th>
-                                                <th scope="col">Contact</th>
-                                                <th scope="col">Day</th>
-                                                <th scope="col">From</th>
-                                                <th scope="col">To</th>
+                                            <th scope="col">ID</th>
+                                                <th scope="col" >ID</th>
+                                                <th scope="col">Doctor ID</th>
+                                                <th scope="col">Speciality</th>
+                                               
                                             </tr>
                                         </thead>
                                         <tbody>
 <?php           
-$order1=$mng->getdocapt();
+$order1=$mng->getusers();
 
     
                  
 foreach($order1 as $row) {
     echo"<tr class='tr'>";
-    echo "<td id='".$row['id']."'>".$row['name']."</td>";
+    echo "<td id='".$row['id']."'>".$row['id']."</td>";
+    echo "<td  id='".$row['id']."'>".$row['fk_UID']."</td>";
     echo "<td  id='".$row['id']."'>".$row['specialty']."</td>";
-    echo "<td  id='".$row['id']."'>".$row['contact']."</td>";
-    echo "<td  id='".$row['id']."'>".$row['day']."</td>";
-    echo "<td  id='".$row['id']."'>".$row['time_from']."</td>";
-    echo "<td  id='".$row['id']."'>".$row['time_to']."</td>";
-
+ 
     echo"</tr>";
    
 }
@@ -157,18 +154,21 @@ foreach($order1 as $row) {
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title">Add new appointment</h5>
+					<h5 class="modal-title">Edit/Delete user</h5>
+                
 				</div>
 				<div class="modal-body">
-					<form id="myform" action="patient/appt.php" method="POST">
-                    <input type="hidden"  id="id" name="id" value="">
-						<div class="form-group"><input id="name" name="name" class="form-control" type="text" placeholder="Name" value=""></div>
-						<div class="form-group"><input id="speciality" name="speciality" class="form-control" type="text" placeholder="Doctor"></div>
-						<div class="form-group"><input id="contact" name="contact" class="form-control"  ></div>
-						<div class="form-group"><input id="day" name="day" class="form-control" type="text" placeholder="Date"></div>
+					<form id="myform" action="admin/action/ud.php" method="POST">
+                        <div class="form-group">ID :<input id="id" name="id" class="form-control" type="text" placeholder="Name" value=""></div>
+						<div class="form-group">Name :<input id="name" name="name" class="form-control" type="text" placeholder="Name" value=""></div>
+                        <div class="form-group">Address :<input id="address" name="address" class="form-control" type="text" placeholder="address"></div>
+                        <div class="form-group">Contact : <input id="contact" name="contact" class="form-control"  ></div>
+                        <div class="form-group">Username : <input id="username" name="username" class="form-control"  ></div>
+						<div class="form-group">Password : <input id="password" name="password" class="form-control" type="text" placeholder="password"></div>
+						<div class="form-group">Type :<input id="type" name="type" class="form-control" type="text" placeholder="Date"></div>
 						<div class="row">
 							<div class="col-12 col-sm-6">
-								<div class="form-group"> <input type="datetime-local" id="appt" name="appt">Select time</div>
+								
 							</div>
 							
 						</div>
@@ -176,8 +176,45 @@ foreach($order1 as $row) {
 					
 				</div>
 				<div class="modal-footer d-block">
-					<div class="actions justify-content-between"><button type="button" id="delete" class="btn btn-error" data-dismiss="modal">Delete </button> <button type="Submit" class="btn btn-info">Add appointment</button></div>
-				</div></form>
+					<div class="actions justify-content-between"><button type="button" id="delete" class="btn btn-error" >Delete User</button> <button type="Submit" name="Submit" class="btn btn-info">Update User</button></div>
+				</div>
+                
+                </form>
+			</div>
+		</div>
+        <!-- 2nd modal for add user  -->
+        <div class="content-overlay"></div>
+        </div>
+        <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Edit/Delete user</h5>
+                
+				</div>
+				<div class="modal-body">
+					<form id="addform" action="admin/action/adduser.php" method="POST">
+                        <div class="form-group">ID :<input id="id" name="id" class="form-control" type="text" placeholder="Name" value="auto" readonly></div>
+						<div class="form-group">Name :<input id="name" name="name" class="form-control" type="text" placeholder="Name" value=""></div>
+                        <div class="form-group">Address :<input id="address" name="address" class="form-control" type="text" placeholder="address"></div>
+                        <div class="form-group">Contact : <input id="contact" name="contact" class="form-control"  ></div>
+                        <div class="form-group">Username : <input id="username" name="username" class="form-control"  ></div>
+						<div class="form-group">Password : <input id="password" name="password" class="form-control" type="text" placeholder="password" ></div>
+						<div class="form-group">Type :<input id="type" name="type" class="form-control" type="text" placeholder="Date" value="3" readonly></div>
+						<div class="row">
+							<div class="col-12 col-sm-6">
+								
+							</div>
+							
+						</div>
+						
+					
+				</div>
+				<div class="modal-footer d-block">
+					<div class="actions justify-content-between"><button type="button" class="btn btn-error" data-dismiss="modal">Cancel</button> <button type="Submit" name="Submit" class="btn btn-info">add User</button></div>
+				</div>
+                
+                </form>
 			</div>
 		</div>
 	</div>
@@ -199,11 +236,11 @@ foreach($order1 as $row) {
 <script>
 
 
-
+// 
 
 jQuery(document).ready(function() {
  
-
+var did;
 
 $("#myform").on('submit', function (event) {
         event.preventDefault(); //prevent default action 
@@ -228,19 +265,64 @@ $("#myform").on('submit', function (event) {
 
               // Visits every single <td> element
     // alert($tds.eq(1).text());  
-    $('#id').val($tds.eq(0).attr('id'))
-    $('#name').val($tds.eq(0).text());
-    $('#speciality').val($tds.eq(1).text());
-    $('#contact').val($tds.eq(2).text());
-    $('#day').val($tds.eq(3).text());
-    
+    $('#id').val($tds.eq(0).text());
+    did=$tds.eq(0).text();
+    $('#name').val($tds.eq(1).text());
+    $('#address').val($tds.eq(2).text());
+    $('#contact').val($tds.eq(3).text());
+    $('#username').val($tds.eq(4).text());
+    $('#password').val($tds.eq(5).text());
+    $('#type').val($tds.eq(6).text());
     $('#exampleModal').modal('show');       // Prints out the text within the <td>
 
 });
 
+$("#delete").click(function(e) {
+    event.preventDefault();
+$.ajax({   
+                            url: "admin/action/deleteuser.php",
+                            type: "POST",
+							data: { id:did},
+                            dataType: 'json',
+                            success: function (response) {
+                              if(response!='0'){
+								
+								location.reload(); }else{alert("Error");}
+                            },
+                          });
+                        });
 
 
 
+$("#adduser").click(function(e) {
+    
+    $('#exampleModal1').modal('show'); 
+
+    $("#addform").on('submit', function (event) {
+        event.preventDefault(); //prevent default action 
+        var post_url = $(this).attr("action"); //get form action url
+        var form_data = $(this).serialize(); //Encode form elements for submission
+
+        $.post(post_url, form_data, function (response) {
+
+            if (response == '1') {
+                location.reload();
+
+            } else {
+
+                console.log("there is an error");
+            }
+        });
+    });
+      
+
+
+
+
+
+
+
+                        });
 
 
 
@@ -261,10 +343,6 @@ $("#myform").on('submit', function (event) {
 </script>
 
 
-<?php 
-
-include 'info.php';
-?>
 
 
 

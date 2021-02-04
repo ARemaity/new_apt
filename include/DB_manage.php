@@ -324,11 +324,68 @@ public function getinfo(){
 					}
 						 else {return 0;}
 				}
+				public function getusers(){
 
+					$stmt1 = $this->db->prepare("SELECT * FROM `users` WHERE type = 3");
+						if ($stmt1->execute()) {
+							$order1 = $stmt1->get_result()->fetch_all(MYSQLI_ASSOC);
+							$stmt1->close();
+							return $order1;
+						}
+							 else {return false;}
+					}
 
+					public function updateuser($id,$name,$address,$contact,$username,$password,$type){
 
+						$stmt1 = $this->db->prepare("UPDATE `users` SET `id`=$id,`name`='$name',`address`='$address',`contact`=$contact,`username`='$username',`password`='$password',`type`=$type WHERE id=$id");
+							if ($stmt1->execute()) {
+							
+								$stmt1->close();
+								return 1;
+							}
+								 else {return 0;}
+						}
+						public function deleteuser($id){
 
+							$stmt1 = $this->db->prepare("DELETE FROM `users` WHERE id=$id");
+								if ($stmt1->execute()) {
+								
+									$stmt1->close();
+									return true;
+								}
+									 else {return false;}
+							}
+							public function adduser($name,$address,$contact,$username,$password,$type){
 
+								$stmt1 = $this->db->prepare("INSERT INTO `users`(`id`, `name`, `address`, `contact`, `username`, `password`, `type`) VALUES (NULL,'$name','$address','$contact','$username','$password',$type)");
+									if ($stmt1->execute()) {
+									
+										$stmt1->close();
+										return 1;
+									}
+										 else {return 0;}
+								}
+								public function getdoctors(){
+
+									$stmt1 = $this->db->prepare("SELECT * FROM `users` WHERE type = 2");
+										if ($stmt1->execute()) {
+											$order1 = $stmt1->get_result()->fetch_all(MYSQLI_ASSOC);
+											$stmt1->close();
+											return $order1;
+										}
+											 else {return false;}
+									}
+									
+									public function getallapt(){
+
+										$stmt1 = $this->db->prepare("SELECT u.name as docn,u.contact as dcontact ,a.schedule,a.status,m.name,m.contact FROM users u INNER JOIN appointment_list a on u.id = a.doctor_id INNER JOIN users m on m.id = a.patient_id");
+											if ($stmt1->execute()) {
+												$order1 = $stmt1->get_result()->fetch_all(MYSQLI_ASSOC);
+												$stmt1->close();
+												return $order1;
+											}
+												 else {return false;}
+										}
 
 
 

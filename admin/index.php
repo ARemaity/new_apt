@@ -1,25 +1,23 @@
-<!-- inner join users with medical_specialty    with docotor schudele  -->
-<!-- modal for insertion to appt tbl  -->
-<!-- constraint take valid time between tyhe schedule time  -->
-
 <?php
-  session_start();
-  ob_start();
-  
+session_start();
+ob_start();
+ob_flush();
 
+ $_SESSION['id']=1;
 require_once dirname(__FILE__, 2) . '/include/DB_Manage.php';
 $mng = new DB_Manage();
 
 if (!isset($_SESSION['id'])) {
     header("Location:../index.php");
-    die();}
-// } else {
 
-//     $stmt = $mng->db->prepare("SELECT * FROM `users` WHERE id =" .$_SESSION['id']);
-//     if ($stmt->execute()) {
-//         $order = $stmt->get_result()->fetch_assoc();
-//         $stmt->close();
-//     }
+    die();
+} else {
+
+    $stmt = $mng->db->prepare("SELECT * FROM `users` WHERE id =" .$_SESSION['id']);
+    if ($stmt->execute()) {
+        $order = $stmt->get_result()->fetch_assoc();
+        $stmt->close();
+    }    }
 
     ?>
 
@@ -62,52 +60,38 @@ if (!isset($_SESSION['id'])) {
                 <div class="app-loader"><i class="icofont-spinner-alt-4 rotate"></i></div>
                 <div class="main-content-wrap">
                     <header class="page-header">
-                        <h1 class="page-title">Doctors List</h1>
+                        <h1 class="page-title">Admin profile page</h1>
                     </header>
                     <div class="page-content">
+                        <div class="row">
+                            <div class="col col-12 col-md-6 mb-4">
+                                <form><label>Photo</label>
+                                    <div class="form-group avatar-box d-flex align-items-center"><img
+                                            src="http://medic-app-html.type-code.pro/assets/content/user-400-3.jpg"
+                                            width="100" height="100" alt="" class="rounded-500 mr-4"> </div>
+                                    <div class="form-group"><label>Full name</label> <input class="form-control"
+                                            type="text" placeholder="Full name" value="<?php echo $order['name']; ?>"readonly="readonly"></div>
+                                    <div class="form-group"><label>Id</label> <input class="form-control" type="text"
+                                            placeholder="Id" value="<?php echo $order['id']; ?>" readonly="readonly"></div>
+                                    <div class="row">
+                                        
+                                       
+                                    </div>
+                                    <div class="form-group"><label>Phone number</label> <input class="form-control"
+                                            type="text" placeholder="Full name" value="<?php echo $order['contact']; ?>"readonly="readonly"></div>
+                                    <div class="form-group"><label>Address</label> <textarea class="form-control"
+                                            placeholder="Address"
+                                            rows="3" readonly="readonly" ><?php echo $order['address']; ?></textarea></div>
+                                   
+                                  
+                                </form>
+                            </div>
                         
+                        </div>
                         <div class="card mb-0 mt-4">
-                            <div class="card-header">Doctors schedule : </div>
+                         
                             <div class="card-body">
-                                <div class="table-responsive">
-                                    <table id="mytable" class="table table-hover">
-                                        <thead>
-                                            <tr class="bg-primary text-white">
-                                                <th scope="col" >Doctor Name</th>
-                                                <th scope="col">Specialty</th>
-                                                <th scope="col">Contact</th>
-                                                <th scope="col">Day</th>
-                                                <th scope="col">From</th>
-                                                <th scope="col">To</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-<?php           
-$order1=$mng->getdocapt();
-
-    
-                 
-foreach($order1 as $row) {
-    echo"<tr class='tr'>";
-    echo "<td id='".$row['id']."'>".$row['name']."</td>";
-    echo "<td  id='".$row['id']."'>".$row['specialty']."</td>";
-    echo "<td  id='".$row['id']."'>".$row['contact']."</td>";
-    echo "<td  id='".$row['id']."'>".$row['day']."</td>";
-    echo "<td  id='".$row['id']."'>".$row['time_from']."</td>";
-    echo "<td  id='".$row['id']."'>".$row['time_to']."</td>";
-
-    echo"</tr>";
-   
-}
-
-                                    
-                                                ?>
-                                            
-                                           
-                                            
-                                        </tbody>
-                                    </table>
-                                </div>
+                
                             </div>
                         </div>
                     </div>
@@ -153,35 +137,10 @@ foreach($order1 as $row) {
             </div>
             <div class="content-overlay"></div>
         </div>
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">Add new appointment</h5>
-				</div>
-				<div class="modal-body">
-					<form id="myform" action="patient/appt.php" method="POST">
-                    <input type="hidden"  id="id" name="id" value="">
-						<div class="form-group"><input id="name" name="name" class="form-control" type="text" placeholder="Name" value=""></div>
-						<div class="form-group"><input id="speciality" name="speciality" class="form-control" type="text" placeholder="Doctor"></div>
-						<div class="form-group"><input id="contact" name="contact" class="form-control"  ></div>
-						<div class="form-group"><input id="day" name="day" class="form-control" type="text" placeholder="Date"></div>
-						<div class="row">
-							<div class="col-12 col-sm-6">
-								<div class="form-group"> <input type="datetime-local" id="appt" name="appt">Select time</div>
-							</div>
-							
-						</div>
-						
-					
-				</div>
-				<div class="modal-footer d-block">
-					<div class="actions justify-content-between"><button type="button" id="delete" class="btn btn-error" data-dismiss="modal">Delete </button> <button type="Submit" class="btn btn-info">Add appointment</button></div>
-				</div></form>
-			</div>
-		</div>
-	</div>
+    </div><!-- Add patients modals -->
   
+    <!-- Add patients modals -->
+   
     <script src="assets/js/jquery-3.3.1.min.js"></script>
     <script src="assets/js/jquery-migrate-1.4.1.min.js"></script>
     <script src="assets/js/popper.min.js"></script>
@@ -196,85 +155,19 @@ foreach($order1 as $row) {
     <script src="assets/js/echarts.min.js"></script>
     <script src="assets/js/echarts-gl.min.js"></script>
     <script src="assets/js/main.js"></script>
-<script>
 
 
 
-
-jQuery(document).ready(function() {
- 
-
-
-$("#myform").on('submit', function (event) {
-        event.preventDefault(); //prevent default action 
-        var post_url = $(this).attr("action"); //get form action url
-        var form_data = $(this).serialize(); //Encode form elements for submission
-
-        $.post(post_url, form_data, function (response) {
-
-
-            if (response == '1') {
-                console.log('nice');
-
-            } else {
-
-                console.log("there is an error");
-            }
-        });
-    });
-        $(".tr").click(function() {
-            var $row = $(this).closest("tr"),       // Finds the closest row <tr> 
-             $tds = $row.find("td");             // Finds all children <td> elements
-
-              // Visits every single <td> element
-    // alert($tds.eq(1).text());  
-    $('#id').val($tds.eq(0).attr('id'))
-    $('#name').val($tds.eq(0).text());
-    $('#speciality').val($tds.eq(1).text());
-    $('#contact').val($tds.eq(2).text());
-    $('#day').val($tds.eq(3).text());
-    
-    $('#exampleModal').modal('show');       // Prints out the text within the <td>
-
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    });
-
-
-
-
-
-
-</script>
-
-
-<?php 
+    <?php 
 
 include 'info.php';
 ?>
 
-
-
-
-
-
-
-
-
-
 </body>
 
 </html>
+
+<?php
+
+
+?>
