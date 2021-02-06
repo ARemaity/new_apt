@@ -21,10 +21,6 @@ if (!isset($_SESSION['id'])) {
 
     ?>
 
-
-
-
-
 <!doctype html>
 <html lang="en">
 
@@ -57,7 +53,7 @@ if (!isset($_SESSION['id'])) {
             <!-- Vertical navbar -->
 <?php include("layout/side.php"); ?>
             <main class="main-content">
-                <div class="app-loader"><i class="icofont-spinner-alt-4 rotate"></i></div>
+                 
                 <div class="main-content-wrap">
                     <header class="page-header">
                         <h1 class="page-title">Patient profile page</h1>
@@ -65,10 +61,7 @@ if (!isset($_SESSION['id'])) {
                     <div class="page-content">
                         <div class="row">
                             <div class="col col-12 col-md-6 mb-4">
-                                <form><label>Photo</label>
-                                    <div class="form-group avatar-box d-flex align-items-center"><img
-                                            src="http://medic-app-html.type-code.pro/assets/content/user-400-3.jpg"
-                                            width="100" height="100" alt="" class="rounded-500 mr-4"> </div>
+                                <form> 
                                     <div class="form-group"><label>Full name</label> <input class="form-control"
                                             type="text" placeholder="Full name" value="<?php echo $order['name']; ?>"readonly="readonly"></div>
                                     <div class="form-group"><label>Id</label> <input class="form-control" type="text"
@@ -135,45 +128,7 @@ if($row['status']==0)
                     </div>
                 </div>
             </main>
-            <div class="app-footer">
-                <div class="footer-wrap">
-                    <div class="row h-100 align-items-center">
-                        <div class="col-12 col-md-6 d-none d-md-block">
-                            <ul class="page-breadcrumbs">
-                                <li class="item"><a href="#" class="link">Medicine</a> <i
-                                        class="separator icofont-thin-right"></i></li>
-                                <li class="item"><a href="#" class="link">Patient</a> <i
-                                        class="separator icofont-thin-right"></i></li>
-                                <li class="item"><a href="#" class="link">Liam Jouns</a> <i
-                                        class="separator icofont-thin-right"></i></li>
-                            </ul>
-                        </div>
-                        <div class="col-12 col-md-6 text-right">
-                            <div class="d-flex align-items-center justify-content-center justify-content-md-end">
-                                <span>Version 1.0.0</span> <button class="no-style ml-2 settings-btn"
-                                    data-toggle="modal" data-target="#settings"><span
-                                        class="icon icofont-ui-settings text-primary"></span></button></div>
-                        </div>
-                    </div>
-                    <div class="footer-skeleton">
-                        <div class="row align-items-center">
-                            <div class="col-12 col-md-6 d-none d-md-block">
-                                <ul class="page-breadcrumbs">
-                                    <li class="item bg-1 animated-bg"></li>
-                                    <li class="item bg animated-bg"></li>
-                                </ul>
-                            </div>
-                            <div class="col-12 col-md-6">
-                                <div class="info justify-content-center justify-content-md-end">
-                                    <div class="version bg animated-bg"></div>
-                                    <div class="settings animated-bg"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="content-overlay"></div>
+
         </div>
     </div><!-- Add patients modals -->
   

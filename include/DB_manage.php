@@ -263,8 +263,9 @@ $stmt1 = $this->db->prepare(" SELECT u.id,u.name , u.contact , d.day , d.time_fr
 
 		 public function insapt($docid,$patientid,$schedule){
 
-			$stmt1 = $this->db->prepare("INSERT INTO `appointment_list`(`id`, `doctor_id`, `patient_id`, `schedule`, `status`, `date_created`) VALUES (Null,$docid,$patientid,NOW(),0,NOW())");
-				if ($stmt1->execute()) {
+			$stmt1 = $this->db->prepare("INSERT INTO `appointment_list`(`id`, `doctor_id`, `patient_id`, `schedule`, `status`, `date_created`) VALUES (Null,$docid,$patientid,?,0,NOW())");
+			$stmt1->bind_param("s",$schedule);  	
+			if ($stmt1->execute()) {
 					
 					$stmt1->close();
 					return 1;
@@ -314,9 +315,9 @@ public function getinfo(){
 					 else {return false;}
 			}
 
-			public function confirmapt($id){
+			public function confirmapt($id,$st){
 			
-				$stmt1 = $this->db->prepare(" UPDATE `appointment_list` SET `status`=1 WHERE id=".$id);
+				$stmt1 = $this->db->prepare(" UPDATE `appointment_list` SET `status`=".$st." WHERE id=".$id);
 					if ($stmt1->execute()) {
 						
 						$stmt1->close();

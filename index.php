@@ -1,7 +1,25 @@
 <?php
 session_start();
 ob_start();
+if(isset($_SESSION['type'])){
+		
 
+	
+switch ($_SESSION["type"]) {
+	case 1:
+		header("location:admin/index.php");
+		break;
+	case 2:
+		header("location:doctor/index.php");
+		break;
+	case 3:
+		header("location:patient/index.php");
+      break;
+	default:
+	header("location:index.php");
+		break;
+}
+}
 require_once  'include/DB_Manage.php';
 $mng = new DB_Manage();
 
@@ -14,15 +32,17 @@ if (!empty($order)) {
 
 	
 if($order['type']==1){
+	$_SESSION['type']=1;
 	$_SESSION['id']=$order['id'];
 	 header("Location:admin/index.php"); 
 	
 }elseif($order['type']==2){
+	$_SESSION['type']=2;
 	$_SESSION['id']=$order['id'];
 	header("Location:doctor/index.php");
 	die(); 
 						  }elseif($order['type']==3){
-	
+							$_SESSION['type']=3;
 	
 							$_SESSION['id']=$order['id'];
 	header("Location:patient/index.php");

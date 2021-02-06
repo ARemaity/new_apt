@@ -59,7 +59,7 @@ if (!isset($_SESSION['id'])) {
             <!-- Vertical navbar -->
 <?php include("layout/side.php"); ?>
             <main class="main-content">
-                <div class="app-loader"><i class="icofont-spinner-alt-4 rotate"></i></div>
+                 
                 <div class="main-content-wrap">
                     <header class="page-header">
                         <h1 class="page-title">Doctors List</h1>
@@ -89,7 +89,7 @@ $order1=$mng->getdocapt();
                  
 foreach($order1 as $row) {
     echo"<tr class='tr'>";
-    echo "<td id='".$row['id']."'>".$row['name']."</td>";
+    echo "<td id='".$row['id']."'><a href='javascript:void(0);'>".$row['name']."</a></td>";
     echo "<td  id='".$row['id']."'>".$row['specialty']."</td>";
     echo "<td  id='".$row['id']."'>".$row['contact']."</td>";
     echo "<td  id='".$row['id']."'>".$row['day']."</td>";
@@ -113,45 +113,7 @@ foreach($order1 as $row) {
                     </div>
                 </div>
             </main>
-            <div class="app-footer">
-                <div class="footer-wrap">
-                    <div class="row h-100 align-items-center">
-                        <div class="col-12 col-md-6 d-none d-md-block">
-                            <ul class="page-breadcrumbs">
-                                <li class="item"><a href="#" class="link">Medicine</a> <i
-                                        class="separator icofont-thin-right"></i></li>
-                                <li class="item"><a href="#" class="link">Patient</a> <i
-                                        class="separator icofont-thin-right"></i></li>
-                                <li class="item"><a href="#" class="link">Liam Jouns</a> <i
-                                        class="separator icofont-thin-right"></i></li>
-                            </ul>
-                        </div>
-                        <div class="col-12 col-md-6 text-right">
-                            <div class="d-flex align-items-center justify-content-center justify-content-md-end">
-                                <span>Version 1.0.0</span> <button class="no-style ml-2 settings-btn"
-                                    data-toggle="modal" data-target="#settings"><span
-                                        class="icon icofont-ui-settings text-primary"></span></button></div>
-                        </div>
-                    </div>
-                    <div class="footer-skeleton">
-                        <div class="row align-items-center">
-                            <div class="col-12 col-md-6 d-none d-md-block">
-                                <ul class="page-breadcrumbs">
-                                    <li class="item bg-1 animated-bg"></li>
-                                    <li class="item bg animated-bg"></li>
-                                </ul>
-                            </div>
-                            <div class="col-12 col-md-6">
-                                <div class="info justify-content-center justify-content-md-end">
-                                    <div class="version bg animated-bg"></div>
-                                    <div class="settings animated-bg"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="content-overlay"></div>
+    
         </div>
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered">
@@ -162,18 +124,12 @@ foreach($order1 as $row) {
 				<div class="modal-body">
 					<form id="myform" action="patient/appt.php" method="POST">
                     <input type="hidden"  id="id" name="id" value="">
-						<div class="form-group"><input id="name" name="name" class="form-control" type="text" placeholder="Name" value=""></div>
-						<div class="form-group"><input id="speciality" name="speciality" class="form-control" type="text" placeholder="Doctor"></div>
-						<div class="form-group"><input id="contact" name="contact" class="form-control"  ></div>
-						<div class="form-group"><input id="day" name="day" class="form-control" type="text" placeholder="Date"></div>
-						<div class="row">
-							<div class="col-12 col-sm-6">
-								<div class="form-group"> <input type="datetime-local" id="appt" name="appt">Select time</div>
-							</div>
-							
-						</div>
-						
-					
+						<div class="form-group"><input id="name" name="name" class="form-control" type="text" placeholder="Name" value="""  readonly="readonly"></div>
+						<div class="form-group"><input id="speciality" name="speciality" class="form-control" type="text" placeholder="Doctor"  readonly="readonly"></div>
+						<div class="form-group"><input id="contact" name="contact" class="form-control"   readonly="readonly"></div>
+						<div class="form-group"><input id="day" name="day" class="form-control" type="text" placeholder="Date" readonly="readonly"></div>
+                        <div class="form-group"><input id="time" name="time" class="form-control" type="text" placeholder="time" readonly="readonly"></div>
+
 				</div>
 				<div class="modal-footer d-block">
 					<div class="actions justify-content-between"><button type="button" id="delete" class="btn btn-error" data-dismiss="modal">Cancel </button> <button type="Submit" class="btn btn-info">Add appointment</button></div>
@@ -201,42 +157,42 @@ foreach($order1 as $row) {
 
 
 
-jQuery(document).ready(function() {
- 
+    jQuery(document).ready(function () {
 
 
-$("#myform").on('submit', function (event) {
-        event.preventDefault(); //prevent default action 
-        var post_url = $(this).attr("action"); //get form action url
-        var form_data = $(this).serialize(); //Encode form elements for submission
 
-        $.post(post_url, form_data, function (response) {
+        $("#myform").on('submit', function (event) {
+            event.preventDefault(); //prevent default action 
+            var post_url = $(this).attr("action"); //get form action url
+            var form_data = $(this).serialize(); //Encode form elements for submission
+
+            $.post(post_url, form_data, function (response) {
 
 
-            if (response == '1') {
-                location.reload();
+                if (response == '1') {
+                    location.reload();
 
-            } else {
+                } else {
 
-                console.log("there is an error");
-            }
+                    console.log("there is an error");
+                }
+            });
         });
-    });
-        $(".tr").click(function() {
+        $(".tr").click(function () {
             var $row = $(this).closest("tr"),       // Finds the closest row <tr> 
-             $tds = $row.find("td");             // Finds all children <td> elements
+                $tds = $row.find("td");             // Finds all children <td> elements
 
-              // Visits every single <td> element
-    // alert($tds.eq(1).text());  
-    $('#id').val($tds.eq(0).attr('id'))
-    $('#name').val($tds.eq(0).text());
-    $('#speciality').val($tds.eq(1).text());
-    $('#contact').val($tds.eq(2).text());
-    $('#day').val($tds.eq(3).text());
-    
-    $('#exampleModal').modal('show');       // Prints out the text within the <td>
+            // Visits every single <td> element
+            // alert($tds.eq(1).text());  
+            $('#id').val($tds.eq(0).attr('id'))
+            $('#name').val($tds.eq(0).text());
+            $('#speciality').val($tds.eq(1).text());
+            $('#contact').val($tds.eq(2).text());
+            $('#day').val($tds.eq(3).text());
+            $('#time').val($tds.eq(4).text()+"-"+$tds.eq(5).text());
+            $('#exampleModal').modal('show');       // Prints out the text within the <td>
 
-});
+        });
 
 
 

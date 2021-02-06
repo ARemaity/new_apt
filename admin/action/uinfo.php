@@ -21,9 +21,8 @@ $info=$_POST['info'];
 
 
 $result = $mng->updateinfo($id,$info);
-echo $result;
-
-
+echo $result; 
+exit();
 
 
 

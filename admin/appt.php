@@ -59,15 +59,15 @@ if (!isset($_SESSION['id'])) {
             <!-- Vertical navbar -->
 <?php include("layout/side.php"); ?>
             <main class="main-content">
-                <div class="app-loader"><i class="icofont-spinner-alt-4 rotate"></i></div>
+                 
                 <div class="main-content-wrap">
                     <header class="page-header">
-                        <h1 class="page-title">Doctors List</h1>
+                        <h1 class="page-title">Request and schedule schedule</h1>
                     </header>
                     <div class="page-content">
                         
                         <div class="card mb-0 mt-4">
-                            <div class="card-header">Doctors schedule : </div>
+                            <div class="card-header">Request's schedule</div>
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table id="mytable" class="table table-hover">
@@ -110,48 +110,60 @@ foreach($order1 as $row) {
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </main>
-            <div class="app-footer">
-                <div class="footer-wrap">
-                    <div class="row h-100 align-items-center">
-                        <div class="col-12 col-md-6 d-none d-md-block">
-                            <ul class="page-breadcrumbs">
-                                <li class="item"><a href="#" class="link">Medicine</a> <i
-                                        class="separator icofont-thin-right"></i></li>
-                                <li class="item"><a href="#" class="link">Patient</a> <i
-                                        class="separator icofont-thin-right"></i></li>
-                                <li class="item"><a href="#" class="link">Liam Jouns</a> <i
-                                        class="separator icofont-thin-right"></i></li>
-                            </ul>
-                        </div>
-                        <div class="col-12 col-md-6 text-right">
-                            <div class="d-flex align-items-center justify-content-center justify-content-md-end">
-                                <span>Version 1.0.0</span> <button class="no-style ml-2 settings-btn"
-                                    data-toggle="modal" data-target="#settings"><span
-                                        class="icon icofont-ui-settings text-primary"></span></button></div>
-                        </div>
-                    </div>
-                    <div class="footer-skeleton">
-                        <div class="row align-items-center">
-                            <div class="col-12 col-md-6 d-none d-md-block">
-                                <ul class="page-breadcrumbs">
-                                    <li class="item bg-1 animated-bg"></li>
-                                    <li class="item bg animated-bg"></li>
-                                </ul>
-                            </div>
-                            <div class="col-12 col-md-6">
-                                <div class="info justify-content-center justify-content-md-end">
-                                    <div class="version bg animated-bg"></div>
-                                    <div class="settings animated-bg"></div>
+
+
+                        <div class="card mb-0 mt-4">
+                            <div class="card-header">Doctors schedule : </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="mytable" class="table table-hover">
+                                        <thead>
+                                            <tr class="bg-primary text-white">
+                                                <th scope="col" >Doctor Name</th>
+                                                <th scope="col">Specialty</th>
+                                                <th scope="col">Contact</th>
+                                                <th scope="col">Day</th>
+                                                <th scope="col">From</th>
+                                                <th scope="col">To</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+<?php           
+$order1=$mng->getdocapt();
+
+    
+                 
+foreach($order1 as $row) {
+    echo"<tr class='tr'>";
+    echo "<td id='".$row['id']."'>".$row['name']."</td>";
+    echo "<td  id='".$row['id']."'>".$row['specialty']."</td>";
+    echo "<td  id='".$row['id']."'>".$row['contact']."</td>";
+    echo "<td  id='".$row['id']."'>".$row['day']."</td>";
+    echo "<td  id='".$row['id']."'>".$row['time_from']."</td>";
+    echo "<td  id='".$row['id']."'>".$row['time_to']."</td>";
+
+    echo"</tr>";
+   
+}
+
+                                    
+                                                ?>
+                                            
+                                           
+                                            
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
+
+
+
+                        
                     </div>
                 </div>
-            </div>
-            <div class="content-overlay"></div>
+            </main>
+             
         </div>
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered">

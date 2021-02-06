@@ -59,7 +59,7 @@ if (!isset($_SESSION['id'])) {
             <!-- Vertical navbar -->
 <?php include("layout/side.php"); ?>
             <main class="main-content">
-                <div class="app-loader"><i class="icofont-spinner-alt-4 rotate"></i></div>
+                 
                 <div class="main-content-wrap">
                     <header class="page-header">
                         <h1 class="page-title">Doctor List</h1>
@@ -92,7 +92,7 @@ $order1=$mng->getdoctors();
 foreach($order1 as $row) {
     echo"<tr class='tr'>";
     echo "<td id='".$row['id']."'>".$row['id']."</td>";
-    echo "<td  id='".$row['id']."'>".$row['name']."</td>";
+    echo "<td  id='".$row['id']."'><a href='javascript:void(0);'>".$row['name']."</a></td>";
     echo "<td  id='".$row['id']."'>".$row['address']."</td>";
     echo "<td  id='".$row['id']."'>".$row['contact']."</td>";
     echo "<td  id='".$row['id']."'>".$row['username']."</td>";
@@ -115,45 +115,7 @@ foreach($order1 as $row) {
                     </div>
                 </div>
             </main>
-            <div class="app-footer">
-                <div class="footer-wrap">
-                    <div class="row h-100 align-items-center">
-                        <div class="col-12 col-md-6 d-none d-md-block">
-                            <ul class="page-breadcrumbs">
-                                <li class="item"><a href="#" class="link">Medicine</a> <i
-                                        class="separator icofont-thin-right"></i></li>
-                                <li class="item"><a href="#" class="link">Patient</a> <i
-                                        class="separator icofont-thin-right"></i></li>
-                                <li class="item"><a href="#" class="link">Liam Jouns</a> <i
-                                        class="separator icofont-thin-right"></i></li>
-                            </ul>
-                        </div>
-                        <div class="col-12 col-md-6 text-right">
-                            <div class="d-flex align-items-center justify-content-center justify-content-md-end">
-                                <span>Version 1.0.0</span> <button class="no-style ml-2 settings-btn"
-                                    data-toggle="modal" data-target="#settings"><span
-                                        class="icon icofont-ui-settings text-primary"></span></button></div>
-                        </div>
-                    </div>
-                    <div class="footer-skeleton">
-                        <div class="row align-items-center">
-                            <div class="col-12 col-md-6 d-none d-md-block">
-                                <ul class="page-breadcrumbs">
-                                    <li class="item bg-1 animated-bg"></li>
-                                    <li class="item bg animated-bg"></li>
-                                </ul>
-                            </div>
-                            <div class="col-12 col-md-6">
-                                <div class="info justify-content-center justify-content-md-end">
-                                    <div class="version bg animated-bg"></div>
-                                    <div class="settings animated-bg"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="content-overlay"></div>
+             
         </div>
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered">
@@ -164,13 +126,13 @@ foreach($order1 as $row) {
 				</div>
 				<div class="modal-body">
 					<form id="myform" action="admin/action/ud.php" method="POST">
-                        <div class="form-group">ID :<input id="id" name="id" class="form-control" type="text" placeholder="Name" value=""></div>
+               <input id="id" name="id" class="form-control" type="hidden" placeholder="Name" value="">
 						<div class="form-group">Name :<input id="name" name="name" class="form-control" type="text" placeholder="Name" value=""></div>
                         <div class="form-group">Address :<input id="address" name="address" class="form-control" type="text" placeholder="address"></div>
                         <div class="form-group">Contact : <input id="contact" name="contact" class="form-control"  ></div>
                         <div class="form-group">Username : <input id="username" name="username" class="form-control"  ></div>
 						<div class="form-group">Password : <input id="password" name="password" class="form-control" type="text" placeholder="password"></div>
-						<div class="form-group">Type :<input id="type" name="type" class="form-control" type="text" placeholder="Date"></div>
+						<input id="type" name="type" class="form-control" type="hidden" placeholder="Date">
 						<div class="row">
 							<div class="col-12 col-sm-6">
 								
@@ -194,18 +156,18 @@ foreach($order1 as $row) {
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title">Edit/Delete doctor</h5>
+					<h5 class="modal-title">Add new Doctor</h5>
                 
 				</div>
 				<div class="modal-body">
 					<form id="addform" action="admin/action/adduser.php" method="POST">
-                        <div class="form-group">ID :<input id="id" name="id" class="form-control" type="text" placeholder="Name" value="auto" readonly></div>
+    <input id="id" name="id" class="form-control" type="hidden" placeholder="Name" value="auto" readonly>
 						<div class="form-group">Name :<input id="name" name="name" class="form-control" type="text" placeholder="Name" value=""></div>
                         <div class="form-group">Address :<input id="address" name="address" class="form-control" type="text" placeholder="address"></div>
                         <div class="form-group">Contact : <input id="contact" name="contact" class="form-control"  ></div>
                         <div class="form-group">Username : <input id="username" name="username" class="form-control"  ></div>
 						<div class="form-group">Password : <input id="password" name="password" class="form-control" type="text" placeholder="password" ></div>
-						<div class="form-group">Type :<input id="type" name="type" class="form-control" type="text" placeholder="Date" value="2" readonly></div>
+					<input id="type" name="type" class="form-control" type="hidden" placeholder="Date" value="2" readonly>
 						<div class="row">
 							<div class="col-12 col-sm-6">
 								
