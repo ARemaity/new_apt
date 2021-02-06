@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 04, 2021 at 07:12 PM
--- Server version: 10.4.13-MariaDB
--- PHP Version: 7.4.8
+-- Generation Time: Feb 06, 2021 at 09:21 PM
+-- Server version: 10.4.14-MariaDB
+-- PHP Version: 7.4.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -31,7 +31,7 @@ CREATE TABLE `appointment_list` (
   `id` int(30) NOT NULL,
   `doctor_id` int(30) NOT NULL,
   `patient_id` int(30) NOT NULL,
-  `schedule` datetime NOT NULL,
+  `schedule` varchar(255) NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0= for verification, 1=confirmed,2= reschedule,3=done',
   `date_created` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -41,19 +41,11 @@ CREATE TABLE `appointment_list` (
 --
 
 INSERT INTO `appointment_list` (`id`, `doctor_id`, `patient_id`, `schedule`, `status`, `date_created`) VALUES
-(10, 2, 1, '2021-02-03 14:10:18', 1, '2021-02-03 14:10:18'),
-(11, 2, 7, '2021-02-03 14:39:52', 0, '2021-02-03 14:39:52'),
-(12, 1, 8, '2021-02-03 14:40:03', 0, '2021-02-03 14:40:03'),
-(13, 2, 9, '2021-02-03 14:44:00', 1, '2021-02-03 14:44:00'),
-(14, 2, 8, '2021-02-03 14:57:17', 1, '2021-02-03 14:57:17'),
-(26, 2, 7, '2021-02-04 18:55:23', 0, '2021-02-04 18:55:23'),
-(27, 10, 7, '2021-02-04 18:55:50', 0, '2021-02-04 18:55:50'),
-(28, 2, 7, '2021-02-04 18:58:54', 0, '2021-02-04 18:58:54'),
-(29, 2, 12, '2021-02-04 18:59:55', 0, '2021-02-04 18:59:55'),
-(30, 10, 12, '2021-02-04 19:00:08', 1, '2021-02-04 19:00:08'),
-(31, 19, 20, '2021-02-04 19:22:08', 1, '2021-02-04 19:22:08'),
-(32, 2, 20, '2021-02-04 19:24:51', 0, '2021-02-04 19:24:51'),
-(33, 2, 20, '2021-02-04 19:25:56', 0, '2021-02-04 19:25:56');
+(34, 2, 16, '2021-02-05 21:55:49', 1, '2021-02-05 21:55:49'),
+(35, 2, 16, '2021-02-06 21:33:19', 2, '2021-02-06 21:33:19'),
+(36, 2, 16, '2021-02-06 21:34:53', 0, '2021-02-06 21:34:53'),
+(37, 2, 16, '2021-02-06 21:36:11', 0, '2021-02-06 21:36:11'),
+(38, 2, 16, '10:00:00-17:00:00', 0, '2021-02-06 22:01:01');
 
 -- --------------------------------------------------------
 
@@ -80,10 +72,7 @@ INSERT INTO `doctors_schedule` (`id`, `doctor_id`, `day`, `time_from`, `time_to`
 (6, 3, 'Tuesday', '10:00:00', '15:00:00'),
 (7, 3, 'Wednesday', '10:00:00', '15:00:00'),
 (8, 3, 'Thursday', '10:00:00', '15:00:00'),
-(9, 3, 'Friday', '10:00:00', '15:00:00'),
-(10, 10, 'Friday', '10:00:00', '15:00:00'),
-(11, 10, 'Thursday', '10:00:00', '15:00:00'),
-(19, 19, 'Friday', '10:00:00', '15:00:00');
+(9, 3, 'Friday', '10:00:00', '15:00:00');
 
 -- --------------------------------------------------------
 
@@ -103,7 +92,7 @@ CREATE TABLE `medical_specialty` (
 
 INSERT INTO `medical_specialty` (`id`, `fk_UID`, `specialty`) VALUES
 (2, 2, 'dumm2'),
-(3, 10, 'X'),
+(3, 10, 'bone'),
 (6, 19, 'massage');
 
 -- --------------------------------------------------------
@@ -125,7 +114,7 @@ CREATE TABLE `system_tbl` (
 --
 
 INSERT INTO `system_tbl` (`id`, `name`, `email`, `contact`, `about_content`) VALUES
-(1, 'Doctor&#x2019;s Appointment System', 'info@sample.com', '+6948 8542 623', '                        asdasdasdasdasd        \r\n                        asdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbbbbbbBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB');
+(1, 'Doctor&#x2019;s Appointment System', 'info@sample.com', '+6948 8542 623', 'Welcome to  x medical center');
 
 -- --------------------------------------------------------
 
@@ -149,11 +138,10 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `address`, `contact`, `username`, `password`, `type`) VALUES
 (1, 'Administrator', '', '', 'admin@gmail.com', 'admin123', 1),
-(2, 'DR.James Smith, M.D.1', 'Sample Clinic Address', '+1456 554 55623', 'jsmith@sample.com', 'jsmith123', 2),
-(10, 'DR.Claire Blake, M.D.', 'Sample Only', '+5465 555 6232333333', 'cblake@sample.com', 'blake1231t', 2),
-(16, 'asd', 'asd23', '7415466', 'alikkk', 'password', 3),
-(17, 'asd', 'ads', 'asd', 'asd', 'asd', 3),
-(20, 'bruce', 'oldyork', '756669122', 'bruces', 'passwordds', 3);
+(2, 'DR.James Smith', 'M.D.1', '+1456 554 55623', 'dr1@gmail.com', 'dr123', 2),
+(3, 'DR.Claire Blake, M.D.', 'Sample Only', '+5465 555 6232333333', 'dr2@sample.com', 'dr123', 2),
+(16, 'ahmad', 'asd23', '7415466', 'p@gmail.com', 'p123', 3),
+(24, 'bob', 'saida', '2134234', 'bob123', 'bob123', 3);
 
 --
 -- Indexes for dumped tables
@@ -197,7 +185,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `appointment_list`
 --
 ALTER TABLE `appointment_list`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `doctors_schedule`
@@ -221,7 +209,7 @@ ALTER TABLE `system_tbl`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
