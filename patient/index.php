@@ -103,20 +103,30 @@ if (!isset($_SESSION['id'])) {
     }
                  
 foreach($order1 as $row) {
+    $status;
+    switch ($row['status']) {
+        case 0:
+            $status='Pending';
+            break;
+            case 1:
+                $status='Confirmed';
+                break;
+                case 2:
+                    $status='Rejected';
+                    break;
+        default:
+        $status='Pending';
+            break;
+    }
     echo"<tr>";
     echo "<td>".$row['name']."</td>";
     echo "<td>".$row['contact']."</td>";
     echo "<td>".$row['schedule']."</td>";
-if($row['status']==0)
-    echo "<td >Pending</td>";
-    else echo "<td>confirmed</td>";
-
-    echo"</tr>";
-   
-}
+    echo "<td>".$status."</td>";
+    $status='';
 
                                     
-                                                ?>
+                                   }                                   ?>
                                             
                                            
                                             
