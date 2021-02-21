@@ -165,7 +165,7 @@ while($row = mysqli_fetch_array($order1)){
 
                     </div>
                     <div class="modal-body">
-                        <form id="myform" action="admin/action/ud.php" method="POST">
+                        <form id="myform" action="" method="POST">
                             <div class="form-group">ID :<input id="id" name="id" class="form-control" type="text"
                                     placeholder="Name" value=""></div>
                             <div class="form-group">Name :<input id="name" name="name" class="form-control" type="text"
@@ -209,7 +209,7 @@ while($row = mysqli_fetch_array($order1)){
 
                     </div>
                     <div class="modal-body">
-                        <form id="addform" action="admin/action/adduser.php" method="POST">
+                        <form id="addform" action="" method="POST">
                             <input id="id" name="id" class="form-control" type="hidden" placeholder="Name" value="auto"
                                 readonly>
                             <div class="form-group">Name :<input id="name" name="name" class="form-control" type="text"

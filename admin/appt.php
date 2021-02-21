@@ -1,25 +1,13 @@
-<!-- inner join users with medical_specialty    with docotor schudele  -->
-<!-- modal for insertion to appt tbl  -->
-<!-- constraint take valid time between tyhe schedule time  -->
-
 <?php
   session_start();
-  ob_start();
-  
-  
+
+
 require_once '../include/Config.php';
 
 if (!isset($_SESSION['id'])) {
     header("Location:../index.php");
     die();}
-
-
-
     ?>
-
-
-
-
 
 <!doctype html>
 <html lang="en">
@@ -155,27 +143,6 @@ while($row = mysqli_fetch_array($order1)){
     <script src="assets/js/jquery-migrate-1.4.1.min.js"></script>
     <script src="assets/js/popper.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
-
-<script>
-
-
-
-
-
-
-
-
-
-</script>
-
-
-
-
-
-
-
-
-
 
 
 </body>

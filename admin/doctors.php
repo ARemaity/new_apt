@@ -198,7 +198,7 @@ while($row = mysqli_fetch_array($order1)){
                 
 				</div>
 				<div class="modal-body">
-					<form id="addform" action="admin/action/adduser.php" method="POST">
+					<form id="addform" action="" method="POST">
     <input id="id" name="id" class="form-control" type="hidden" placeholder="Name" value="auto" readonly>
 						<div class="form-group">Name :<input id="name" name="name" class="form-control" type="text" placeholder="Name" value=""></div>
                         <div class="form-group">Address :<input id="address" name="address" class="form-control" type="text" placeholder="address"></div>
@@ -259,15 +259,6 @@ $("#adduser").click(function(e) {
     $('#exampleModal1').modal('show'); 
 
                         });
-
-
-
-
-
-
-
-
-
 
     });
 
