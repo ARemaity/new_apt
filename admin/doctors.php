@@ -1,28 +1,75 @@
-<!-- inner join users with medical_specialty    with docotor schudele  -->
-<!-- modal for insertion to appt tbl  -->
-<!-- constraint take valid time between tyhe schedule time  -->
-
 <?php
   session_start();
   ob_start();
   
 
-require_once dirname(__FILE__, 2) . '/include/DB_Manage.php';
-$mng = new DB_Manage();
 
 if (!isset($_SESSION['id'])) {
     header("Location:../index.php");
     die();}
-// } else {
 
-//     $stmt = $mng->db->prepare("SELECT * FROM `users` WHERE id =" .$_SESSION['id']);
-//     if ($stmt->execute()) {
-//         $order = $stmt->get_result()->fetch_assoc();
-//         $stmt->close();
-//     }
 
+require_once '../include/Config.php';
+
+
+if(isset($_POST['add'])){
+// ADD USER
+$name=$_POST['name'];
+$address=$_POST['address'];
+$contact=$_POST['contact'];
+$username=$_POST['username'];
+$password=$_POST['password'];
+$type=$_POST['type'];
+
+$stmt = "INSERT INTO `users`(`id`, `name`, `address`, `contact`, `username`, `password`, `type`) VALUES (NULL,'$name','$address','$contact','$username','$password',$type)";
+$order = mysqli_query($con, $stmt);
+if($order){
+
+    header("Refresh:0; url=users.php");
+    // relaod 
+}
+}
+
+
+if(isset($_POST['update'])){
+// update user 
+$id=$_POST['id'];
+$name=$_POST['name'];
+$address=$_POST['address'];
+$contact=$_POST['contact'];
+$username=$_POST['username'];
+$password=$_POST['password'];
+
+
+$stmt = "UPDATE `users` SET `id`='$id',`name`='$name',`address`='$address',`contact`='$contact',`username`='$username' `password`='$password' WHERE id =$id";
+$order = mysqli_query($con, $stmt);
+if($order){
+    header("Refresh:0; url=users.php");
+
+    // relaod 
+}
+
+
+}
+
+
+
+// delete user 
+if(isset($_POST['delete'])){
+$id=$_POST['id'];
+$stmt = "DELETE FROM `users` WHERE id=$id";
+$order1 = mysqli_query($con, $stmt);
+if($order){
+ 
+ 
+    header("Refresh:0; url=users.php"); 
+    // relaod 
+
+
+}
+
+}
     ?>
-
 
 
 
@@ -37,17 +84,9 @@ if (!isset($_SESSION['id'])) {
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="viewport" content="width=device-width,initial-scale=1"><!-- Favicon -->
-    <link rel="shortcut icon" href="http://medic-app-html.type-code.pro/assets/img/favicon.ico"><!-- Plugins CSS -->
+
     <link rel="stylesheet" href="assets/css/bootstrap/bootstrap.css">
-    <link rel="stylesheet" href="assets/css/icofont.min.css">
-    <link rel="stylesheet" href="assets/css/simple-line-icons.css">
-    <link rel="stylesheet" href="assets/css/jquery.typeahead.css">
-    <link rel="stylesheet" href="assets/css/datatables.min.css">
-    <link rel="stylesheet" href="assets/css/bootstrap-select.min.css">
-    <link rel="stylesheet" href="assets/css/Chart.min.css">
-    <link rel="stylesheet" href="assets/css/morris.css">
-    <link rel="stylesheet" href="assets/css/leaflet.css"><!-- Theme CSS -->
-    <link rel="stylesheet" href="assets/css/style.css">
+
 </head>
 
 <body class="vertical-layout boxed">
@@ -84,12 +123,11 @@ if (!isset($_SESSION['id'])) {
                                             </tr>
                                         </thead>
                                         <tbody>
-<?php           
-$order1=$mng->getdoctors();
+                                        <?php           
 
-    
-                 
-foreach($order1 as $row) {
+$stmt1 = "SELECT * FROM `users` WHERE type = 2";
+$order1 = mysqli_query($con, $stmt1);
+while($row = mysqli_fetch_array($order1)){
     echo"<tr class='tr'>";
     echo "<td id='".$row['id']."'>".$row['id']."</td>";
     echo "<td  id='".$row['id']."'><a href='javascript:void(0);'>".$row['name']."</a></td>";
@@ -104,7 +142,7 @@ foreach($order1 as $row) {
 
                                     
                                                 ?>
-                                            
+
                                            
                                             
                                         </tbody>
@@ -125,14 +163,14 @@ foreach($order1 as $row) {
                 
 				</div>
 				<div class="modal-body">
-					<form id="myform" action="admin/action/ud.php" method="POST">
+					<form id="myform" action="" method="POST">
                <input id="id" name="id" class="form-control" type="hidden" placeholder="Name" value="">
 						<div class="form-group">Name :<input id="name" name="name" class="form-control" type="text" placeholder="Name" value=""></div>
                         <div class="form-group">Address :<input id="address" name="address" class="form-control" type="text" placeholder="address"></div>
                         <div class="form-group">Contact : <input id="contact" name="contact" class="form-control"  ></div>
                         <div class="form-group">Username : <input id="username" name="username" class="form-control"  ></div>
 						<div class="form-group">Password : <input id="password" name="password" class="form-control" type="text" placeholder="password"></div>
-						<input id="type" name="type" class="form-control" type="hidden" placeholder="Date">
+						
 						<div class="row">
 							<div class="col-12 col-sm-6">
 								
@@ -143,7 +181,7 @@ foreach($order1 as $row) {
 					
 				</div>
 				<div class="modal-footer d-block">
-					<div class="actions justify-content-between"><button type="button" id="delete" class="btn btn-error" >Delete Doctor</button> <button type="Submit" name="Submit" class="btn btn-info">Update Doctor</button></div>
+					<div class="actions justify-content-between"><button type="Submit" name="delete" class="btn btn-error" >Delete Doctor</button> <button type="Submit" name="update" class="btn btn-info">Update Doctor</button></div>
 				</div>
                 
                 </form>
@@ -178,7 +216,7 @@ foreach($order1 as $row) {
 					
 				</div>
 				<div class="modal-footer d-block">
-					<div class="actions justify-content-between"><button type="button" class="btn btn-error" data-dismiss="modal">Cancel</button> <button type="Submit" name="Submit" class="btn btn-info">add Doctor</button></div>
+					<div class="actions justify-content-between"><button type="button" class="btn btn-error" data-dismiss="modal">Cancel</button> <button type="Submit" name="add" class="btn btn-info">add Doctor</button></div>
 				</div>
                 
                 </form>
@@ -190,50 +228,18 @@ foreach($order1 as $row) {
     <script src="assets/js/jquery-migrate-1.4.1.min.js"></script>
     <script src="assets/js/popper.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
-    <script src="assets/js/jquery.typeahead.min.js"></script>
-    <script src="assets/js/datatables.min.js"></script>
-    <script src="assets/js/bootstrap-select.min.js"></script>
-    <script src="assets/js/jquery.barrating.min.js"></script>
-    <script src="assets/js/Chart.min.js"></script>
-    <script src="assets/js/raphael-min.js"></script>
-    <script src="assets/js/morris.min.js"></script>
-    <script src="assets/js/echarts.min.js"></script>
-    <script src="assets/js/echarts-gl.min.js"></script>
-    <script src="assets/js/main.js"></script>
+
 <script>
 
 
 
 
 jQuery(document).ready(function() {
- 
-var did;
 
-$("#myform").on('submit', function (event) {
-        event.preventDefault(); //prevent default action 
-        var post_url = $(this).attr("action"); //get form action url
-        var form_data = $(this).serialize(); //Encode form elements for submission
-
-        $.post(post_url, form_data, function (response) {
-
-
-            if (response == '1') {
-                location.reload();
-
-            } else {
-
-                console.log("there is an error");
-            }
-        });
-    });
-        $(".tr").click(function() {
-            var $row = $(this).closest("tr"),       // Finds the closest row <tr> 
-             $tds = $row.find("td");             // Finds all children <td> elements
-
-              // Visits every single <td> element
-    // alert($tds.eq(1).text());  
+     $(".tr").click(function() {
+    var $row = $(this).closest("tr"),       // Finds the closest row <tr> 
+     $tds = $row.find("td");             // Finds all children <td> elements
     $('#id').val($tds.eq(0).text());
-    did=$tds.eq(0).text();
     $('#name').val($tds.eq(1).text());
     $('#address').val($tds.eq(2).text());
     $('#contact').val($tds.eq(3).text());
@@ -244,50 +250,13 @@ $("#myform").on('submit', function (event) {
 
 });
 
-$("#delete").click(function(e) {
-    event.preventDefault();
-$.ajax({   
-                            url: "admin/action/deleteuser.php",
-                            type: "POST",
-							data: { id:did},
-                            dataType: 'json',
-                            success: function (response) {
-                              if(response!='0'){
-								
-								location.reload(); }else{alert("Error");}
-                            },
-                          });
-                        });
+
 
 
 
 $("#adduser").click(function(e) {
     
     $('#exampleModal1').modal('show'); 
-
-    $("#addform").on('submit', function (event) {
-        event.preventDefault(); //prevent default action 
-        var post_url = $(this).attr("action"); //get form action url
-        var form_data = $(this).serialize(); //Encode form elements for submission
-
-        $.post(post_url, form_data, function (response) {
-
-            if (response == '1') {
-                location.reload();
-
-            } else {
-
-                console.log("there is an error");
-            }
-        });
-    });
-      
-
-
-
-
-
-
 
                         });
 
@@ -309,10 +278,7 @@ $("#adduser").click(function(e) {
 
 </script>
 
-<?php
-include 'layout/infoc.php';
 
-?>
 
 
 

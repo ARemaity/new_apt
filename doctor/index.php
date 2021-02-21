@@ -1,25 +1,24 @@
-<?php
-session_start();
-ob_start();
-ob_flush();
+<!-- inner join users with medical_specialty    with docotor schudele  -->
+<!-- modal for insertion to appt tbl  -->
+<!-- constraint take valid time between tyhe schedule time  -->
 
-//   $_SESSION['id']=2;
-require_once dirname(__FILE__, 2) . '/include/DB_Manage.php';
-$mng = new DB_Manage();
+<?php
+  session_start();
+  ob_start();
+  
+  
+require_once '../include/Config.php';
 
 if (!isset($_SESSION['id'])) {
     header("Location:../index.php");
+    die();}
 
-    die();
-} else {
-
-    $stmt = $mng->db->prepare("SELECT u.id,u.name,u.address,u.contact,m.specialty FROM users u INNER JOIN medical_specialty m on u.id = m.fk_UID  WHERE u.id =" .$_SESSION['id']);
-    if ($stmt->execute()) {
-        $order = $stmt->get_result()->fetch_assoc();
-        $stmt->close();
-    }    }
 
     ?>
+
+
+
+
 
 <!doctype html>
 <html lang="en">
@@ -31,83 +30,81 @@ if (!isset($_SESSION['id'])) {
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="viewport" content="width=device-width,initial-scale=1"><!-- Favicon -->
-    <link rel="shortcut icon" href="http://medic-app-html.type-code.pro/assets/img/favicon.ico"><!-- Plugins CSS -->
+
     <link rel="stylesheet" href="assets/css/bootstrap/bootstrap.css">
-    <link rel="stylesheet" href="assets/css/icofont.min.css">
-    <link rel="stylesheet" href="assets/css/simple-line-icons.css">
-    <link rel="stylesheet" href="assets/css/jquery.typeahead.css">
-    <link rel="stylesheet" href="assets/css/datatables.min.css">
-    <link rel="stylesheet" href="assets/css/bootstrap-select.min.css">
-    <link rel="stylesheet" href="assets/css/Chart.min.css">
-    <link rel="stylesheet" href="assets/css/morris.css">
-    <link rel="stylesheet" href="assets/css/leaflet.css"><!-- Theme CSS -->
-    <link rel="stylesheet" href="assets/css/style.css">
+
 </head>
 
 <body class="vertical-layout boxed">
    
     <div class="page-box">
         <div class="app-container">
-
+            <!-- Horizontal navbar -->
+     
+            <!-- Vertical navbar -->
 <?php include("layout/side.php"); ?>
             <main class="main-content">
                  
                 <div class="main-content-wrap">
                     <header class="page-header">
-                        <h1 class="page-title">Doctor profile page</h1>
+                        <h1 class="page-title">Patient List</h1>
                     </header>
                     <div class="page-content">
-                        <div class="row">
-                            <div class="col col-12 col-md-6 mb-4">
-                                <form> 
-                                    <div class="form-group"><label>Full name</label> <input class="form-control"
-                                            type="text" placeholder="Full name" value="<?php echo $order['name']; ?>"readonly="readonly"></div>
-                                            <div class="form-group"><label>Speciality</label> <input class="form-control"
-                                            type="text" placeholder="Full name" value="<?php echo $order['specialty']; ?>"readonly="readonly"></div>
-                                    <div class="form-group"><label>Id</label> <input class="form-control" type="text"
-                                            placeholder="Id" value="<?php echo $order['id']; ?>" readonly="readonly"></div>
-                                    <div class="row">
-                                        
-                                       
-                                    </div>
-                                    <div class="form-group"><label>Phone number</label> <input class="form-control"
-                                            type="text" placeholder="Full name" value="<?php echo $order['contact']; ?>"readonly="readonly"></div>
-                                    <div class="form-group"><label>Address</label> <textarea class="form-control"
-                                            placeholder="Address"
-                                            rows="3" readonly="readonly" ><?php echo $order['address']; ?></textarea></div>
-                                   
-                                  
-                                </form>
-                            </div>
                         
-                        </div>
                         <div class="card mb-0 mt-4">
-                            <div class="card-header">My Schedule</div>
+                            <div class="card-header">patients schedule : </div>
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table table-hover">
+                                    <table id="mytable" class="table table-hover">
                                         <thead>
                                             <tr class="bg-primary text-white">
-                                                <th scope="col" >Day</th>
-                                                <th scope="col">From</th>
-                                                <th scope="col">To</th>
-                                                
+                                                <th scope="col" >Patient Name</th>
+                                                <th scope="col">contact</th>
+                                                <th scope="col">Schedule</th>
+                                                <th scope="col">Status</th>
+                                                <th scope="col">Datecreated</th>
+                                          
                                             </tr>
                                         </thead>
                                         <tbody>
 <?php           
-  $stmt1 = $mng->db->prepare("SELECT day,time_from,time_to FROM doctors_schedule  WHERE doctor_id =" .$_SESSION['id']);
-    if ($stmt1->execute()) {
-        $order1 = $stmt1->get_result()->fetch_all(MYSQLI_ASSOC);  
-    }
+
+$stmt1 = "SELECT m.id,name,contact,schedule,status,date_created FROM users u INNER JOIN appointment_list m on u.id = m.patient_id  WHERE m.doctor_id =" .$_SESSION['id']. "";
+
+
+$order1 = mysqli_query($con, $stmt1);
+
+
+
+
                  
-    foreach($order1 as $row) {
-    echo"<tr>";
-    echo "<td>".$row['day']."</td>";
-    echo "<td>".$row['time_from']."</td>";
-    echo "<td>".$row['time_to']."</td>";
+while($row = mysqli_fetch_array($order1)){
+
+
+
+    $status;
+    switch ($row['status']) {
+        case 0:
+            $status='Pending';
+            break;
+            case 1:
+                $status='Confirmed';
+                break;
+                case 2:
+                    $status='Rejected';
+                    break;
+        default:
+        $status='Pending';
+            break;
+    }
+    echo"<tr class='tr'>";
+    echo "<td id='".$row['id']."'><a href='javascript:void(0);'>".$row['name']."</a></td>";
+    echo "<td  id='".$row['id']."'>".$row['contact']."</td>";
+    echo "<td  id='".$row['id']."'>".$row['schedule']."</td>";
+    echo "<td  id='".$row['id']."'>".$status."</td>";
+    echo "<td  id='".$row['id']."'>".$row['date_created']."</td>";
     echo"</tr>";
-   
+    $status=0;
 }
 
                                     
@@ -125,24 +122,108 @@ if (!isset($_SESSION['id'])) {
             </main>
              
         </div>
-    </div><!-- Add patients modals -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title"> appointment Action </h5>
+				</div>
+				<div class="modal-body">
+				
+                    <input type="hidden"  id="id" name="id" value="">
+						
+						
+                    </form>
+					
+				</div>
+				<div class="modal-footer d-block">
+					<div class="actions justify-content-between"><button type="button" class="btn btn-error" data-dismiss="modal">Cancel</button> <button id="reject"  class="btn btn-danger">Reject appointment</button> <button id="accept"  class="btn btn-info">Confirm appointment</button></div>
+				</div>
+			</div>
+		</div>
+	</div>
   
-    <!-- Add patients modals -->
-   
     <script src="assets/js/jquery-3.3.1.min.js"></script>
     <script src="assets/js/jquery-migrate-1.4.1.min.js"></script>
     <script src="assets/js/popper.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
-    <script src="assets/js/jquery.typeahead.min.js"></script>
-    <script src="assets/js/datatables.min.js"></script>
-    <script src="assets/js/bootstrap-select.min.js"></script>
-    <script src="assets/js/jquery.barrating.min.js"></script>
-    <script src="assets/js/Chart.min.js"></script>
-    <script src="assets/js/raphael-min.js"></script>
-    <script src="assets/js/morris.min.js"></script>
-    <script src="assets/js/echarts.min.js"></script>
-    <script src="assets/js/echarts-gl.min.js"></script>
-    <script src="assets/js/main.js"></script>
+
+<script>
+
+
+
+
+jQuery(document).ready(function() {
+ 
+var idd;
+
+
+        $(".tr").click(function() {
+            var $row = $(this).closest("tr"),       // Finds the closest row <tr> 
+             $tds = $row.find("td");             // Finds all children <td> elements
+    $('#id').val($tds.eq(0).attr('id'))
+idd=$tds.eq(0).attr('id');
+    $('#exampleModal').modal('show');       // Prints out the text within the <td>
+
+});
+
+
+
+// $("#accept").click(function(e) {
+// $.ajax({   
+//                             url: "doctor/action.php",
+//                             type: "POST",
+// 							data: { id:idd,st:1},
+//                             dataType: 'json',
+//                             success: function (response) {
+//                               if(response!='0'){
+								
+// 								location.reload(); }else{alert("Error");}
+//                             },
+//                           });
+//                         });
+
+
+//                         $("#reject").click(function(e) {
+// $.ajax({   
+//                             url: "doctor/action.php",
+//                             type: "POST",
+// 							data: { id:idd,st:2},
+//                             dataType: 'json',
+//                             success: function (response) {
+//                               if(response!='0'){
+								
+// 								location.reload(); }else{alert("Error");}
+//                             },
+//                           });
+//                         });
+
+
+
+
+
+
+
+    });
+
+
+
+
+
+
+</script>
+
+
+<?php 
+
+include 'info.php';
+?>
+
+
+
+
+
+
 
 
 
@@ -150,8 +231,3 @@ if (!isset($_SESSION['id'])) {
 </body>
 
 </html>
-
-<?php
-
-
-?>

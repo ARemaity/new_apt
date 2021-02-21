@@ -7,19 +7,13 @@
   ob_start();
   
   
-require_once dirname(__FILE__, 2) . '/include/DB_Manage.php';
-$mng = new DB_Manage();
+require_once '../include/Config.php';
 
 if (!isset($_SESSION['id'])) {
     header("Location:../index.php");
     die();}
-// } else {
 
-//     $stmt = $mng->db->prepare("SELECT * FROM `users` WHERE id =" .$_SESSION['id']);
-//     if ($stmt->execute()) {
-//         $order = $stmt->get_result()->fetch_assoc();
-//         $stmt->close();
-//     }
+
 
     ?>
 
@@ -37,17 +31,9 @@ if (!isset($_SESSION['id'])) {
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="viewport" content="width=device-width,initial-scale=1"><!-- Favicon -->
-    <link rel="shortcut icon" href="http://medic-app-html.type-code.pro/assets/img/favicon.ico"><!-- Plugins CSS -->
+
     <link rel="stylesheet" href="assets/css/bootstrap/bootstrap.css">
-    <link rel="stylesheet" href="assets/css/icofont.min.css">
-    <link rel="stylesheet" href="assets/css/simple-line-icons.css">
-    <link rel="stylesheet" href="assets/css/jquery.typeahead.css">
-    <link rel="stylesheet" href="assets/css/datatables.min.css">
-    <link rel="stylesheet" href="assets/css/bootstrap-select.min.css">
-    <link rel="stylesheet" href="assets/css/Chart.min.css">
-    <link rel="stylesheet" href="assets/css/morris.css">
-    <link rel="stylesheet" href="assets/css/leaflet.css"><!-- Theme CSS -->
-    <link rel="stylesheet" href="assets/css/style.css">
+
 </head>
 
 <body class="vertical-layout boxed">
@@ -83,11 +69,10 @@ if (!isset($_SESSION['id'])) {
                                         </thead>
                                         <tbody>
 <?php           
-$order1=$mng->getallapt();
 
-    
-                 
-foreach($order1 as $row) {
+    $stmt1 = "SELECT u.name as docn,u.contact as dcontact ,a.schedule,a.status,m.name,m.contact FROM users u INNER JOIN appointment_list a on u.id = a.doctor_id INNER JOIN users m on m.id = a.patient_id";
+    $order1 = mysqli_query($con, $stmt1);
+    while($row = mysqli_fetch_array($order1)){
     echo"<tr class='tr'>";
     echo "<td>".$row['docn']."</td>";
     echo "<td>".$row['dcontact']."</td>";
@@ -128,12 +113,13 @@ foreach($order1 as $row) {
                                             </tr>
                                         </thead>
                                         <tbody>
-<?php           
-$order1=$mng->getdocapt();
 
-    
-                 
-foreach($order1 as $row) {
+<?php   
+
+
+$stmt1 = "SELECT u.id,u.name , u.contact , d.day , d.time_from ,d.time_to ,m.specialty FROM users u INNER JOIN doctors_schedule d on u.id = d.doctor_id INNER JOIN medical_specialty m on u.id = m.fk_UID ";
+$order1 = mysqli_query($con, $stmt1);
+while($row = mysqli_fetch_array($order1)){
     echo"<tr class='tr'>";
     echo "<td id='".$row['id']."'>".$row['name']."</td>";
     echo "<td  id='".$row['id']."'>".$row['specialty']."</td>";
@@ -148,8 +134,7 @@ foreach($order1 as $row) {
 
                                     
                                                 ?>
-                                            
-                                           
+
                                             
                                         </tbody>
                                     </table>
@@ -165,49 +150,12 @@ foreach($order1 as $row) {
             </main>
              
         </div>
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">Add new appointment</h5>
-				</div>
-				<div class="modal-body">
-					<form id="myform" action="patient/appt.php" method="POST">
-                    <input type="hidden"  id="id" name="id" value="">
-						<div class="form-group"><input id="name" name="name" class="form-control" type="text" placeholder="Name" value=""></div>
-						<div class="form-group"><input id="speciality" name="speciality" class="form-control" type="text" placeholder="Doctor"></div>
-						<div class="form-group"><input id="contact" name="contact" class="form-control"  ></div>
-						<div class="form-group"><input id="day" name="day" class="form-control" type="text" placeholder="Date"></div>
-						<div class="row">
-							<div class="col-12 col-sm-6">
-								<div class="form-group"> <input type="datetime-local" id="appt" name="appt">Select time</div>
-							</div>
-							
-						</div>
-						
-					
-				</div>
-				<div class="modal-footer d-block">
-					<div class="actions justify-content-between"><button type="button" id="delete" class="btn btn-error" data-dismiss="modal">Delete </button> <button type="Submit" class="btn btn-info">Add appointment</button></div>
-				</div></form>
-			</div>
-		</div>
-	</div>
-  
+
     <script src="assets/js/jquery-3.3.1.min.js"></script>
     <script src="assets/js/jquery-migrate-1.4.1.min.js"></script>
     <script src="assets/js/popper.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
-    <script src="assets/js/jquery.typeahead.min.js"></script>
-    <script src="assets/js/datatables.min.js"></script>
-    <script src="assets/js/bootstrap-select.min.js"></script>
-    <script src="assets/js/jquery.barrating.min.js"></script>
-    <script src="assets/js/Chart.min.js"></script>
-    <script src="assets/js/raphael-min.js"></script>
-    <script src="assets/js/morris.min.js"></script>
-    <script src="assets/js/echarts.min.js"></script>
-    <script src="assets/js/echarts-gl.min.js"></script>
-    <script src="assets/js/main.js"></script>
+
 <script>
 
 
@@ -221,10 +169,7 @@ foreach($order1 as $row) {
 </script>
 
 
-<?php
-include 'layout/infoc.php';
 
-?>
 
 
 

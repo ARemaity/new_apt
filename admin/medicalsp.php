@@ -1,27 +1,70 @@
-<!-- inner join users with medical_specialty    with docotor schudele  -->
-<!-- modal for insertion to appt tbl  -->
-<!-- constraint take valid time between tyhe schedule time  -->
-
 <?php
   session_start();
   ob_start();
   
 
-require_once dirname(__FILE__, 2) . '/include/DB_Manage.php';
-$mng = new DB_Manage();
 
 if (!isset($_SESSION['id'])) {
     header("Location:../index.php");
     die();}
-// } else {
 
-//     $stmt = $mng->db->prepare("SELECT * FROM `users` WHERE id =" .$_SESSION['id']);
-//     if ($stmt->execute()) {
-//         $order = $stmt->get_result()->fetch_assoc();
-//         $stmt->close();
-//     }
 
+require_once '../include/Config.php';
+
+
+if(isset($_POST['add'])){
+
+
+$docid=$_POST['docid'];
+$speciality=$_POST['speciality'];
+
+
+$stmt = "INSERT INTO `medical_specialty`(`id`, `fk_UID`, `specialty`) VALUES (NULL,'$doid','$spcl')";
+$order = mysqli_query($con, $stmt);
+if($order){
+
+    header("Refresh:0; url=users.php");
+    // relaod 
+}
+}
+
+
+if(isset($_POST['update'])){
+
+
+    $id=$_POST['id'];
+    $docid=$_POST['docid'];
+    $speciality=$_POST['speciality'];
+$stmt = "UPDATE `medical_specialty` SET `id`=$id,`fk_UID`=$docid,`specialty`='$speciality' WHERE id=$id";
+$order = mysqli_query($con, $stmt);
+if($order){
+    header("Refresh:0; url=users.php");
+
+    // relaod 
+}
+
+
+}
+
+
+
+// delete user 
+if(isset($_POST['delete'])){
+    $id=$_POST['id'];
+$stmt = "DELETE FROM `medical_specialty` WHERE id=$id";
+$order1 = mysqli_query($con, $stmt);
+if($order1){
+ 
+ 
+    header("Refresh:0; url=users.php"); 
+    // relaod 
+
+
+}
+
+}
     ?>
+
 
 
 
@@ -37,17 +80,9 @@ if (!isset($_SESSION['id'])) {
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="viewport" content="width=device-width,initial-scale=1"><!-- Favicon -->
-    <link rel="shortcut icon" href="http://medic-app-html.type-code.pro/assets/img/favicon.ico"><!-- Plugins CSS -->
+
     <link rel="stylesheet" href="assets/css/bootstrap/bootstrap.css">
-    <link rel="stylesheet" href="assets/css/icofont.min.css">
-    <link rel="stylesheet" href="assets/css/simple-line-icons.css">
-    <link rel="stylesheet" href="assets/css/jquery.typeahead.css">
-    <link rel="stylesheet" href="assets/css/datatables.min.css">
-    <link rel="stylesheet" href="assets/css/bootstrap-select.min.css">
-    <link rel="stylesheet" href="assets/css/Chart.min.css">
-    <link rel="stylesheet" href="assets/css/morris.css">
-    <link rel="stylesheet" href="assets/css/leaflet.css"><!-- Theme CSS -->
-    <link rel="stylesheet" href="assets/css/style.css">
+
 </head>
 
 <body class="vertical-layout boxed">
@@ -83,11 +118,13 @@ if (!isset($_SESSION['id'])) {
                                         </thead>
                                         <tbody>
 <?php           
-$order1=$mng->getsp();
+
 
     
-                 
-foreach($order1 as $row) {
+
+$stmt1 = "SELECT * FROM `medical_specialty`";
+$order1 = mysqli_query($con, $stmt1);
+while($row = mysqli_fetch_array($order1)){
     echo"<tr class='tr'>";
     echo "<td id='".$row['id']."'>".$row['id']."</td>";
     echo "<td  id='".$row['id']."'>".$row['fk_UID']."</td>";
@@ -120,7 +157,7 @@ foreach($order1 as $row) {
                 
 				</div>
 				<div class="modal-body">
-					<form id="myform" action="admin/action/updatesp.php" method="POST">
+					<form id="myform" action="" method="POST">
                         <div class="form-group">ID :<input id="id" name="id" class="form-control" type="text" placeholder="Name" value=""></div>
 						<div class="form-group">Doctor id :<input id="docid" name="docid" class="form-control" type="text" placeholder="Name" value=""></div>
                         <div class="form-group">Speciality :<input id="speciality" name="speciality" class="form-control" type="text" placeholder="address"></div>
@@ -135,7 +172,7 @@ foreach($order1 as $row) {
 					
 				</div>
 				<div class="modal-footer d-block">
-					<div class="actions justify-content-between"><button type="button" id="delete" class="btn btn-error" >Delete Speciality</button> <button type="Submit" name="Submit" class="btn btn-info">Update Speciality</button></div>
+					<div class="actions justify-content-between"><button type="Submit" name="update" id="delete" class="btn btn-error" >Delete Speciality</button> <button type="Submit" name="Submit" class="btn btn-info">Update Speciality</button></div>
 				</div>
                 
                 </form>
@@ -152,7 +189,7 @@ foreach($order1 as $row) {
                 
 				</div>
 				<div class="modal-body">
-					<form id="addform" action="admin/action/addsp.php" method="POST">
+					<form id="addform" action="" method="POST">
                         <div class="form-group">ID :<input id="id" name="id" class="form-control" type="text" placeholder="id" value="auto" readonly></div>
 						<div class="form-group">Doc ID :<input id="name" name="docid" class="form-control" type="text" placeholder="doc id" value=""></div>
                         <div class="form-group">Speciality :<input id="address" name="speciality" class="form-control" type="text" placeholder="speciality"></div>
@@ -167,7 +204,7 @@ foreach($order1 as $row) {
 					
 				</div>
 				<div class="modal-footer d-block">
-					<div class="actions justify-content-between"><button type="button" class="btn btn-error" data-dismiss="modal">Cancel</button> <button type="Submit" name="Submit" class="btn btn-info">add Speciality</button></div>
+					<div class="actions justify-content-between"><button type="button" class="btn btn-error" data-dismiss="modal">Cancel</button> <button type="Submit" name="new" class="btn btn-info">add Speciality</button></div>
 				</div>
                 
                 </form>
@@ -179,16 +216,7 @@ foreach($order1 as $row) {
     <script src="assets/js/jquery-migrate-1.4.1.min.js"></script>
     <script src="assets/js/popper.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
-    <script src="assets/js/jquery.typeahead.min.js"></script>
-    <script src="assets/js/datatables.min.js"></script>
-    <script src="assets/js/bootstrap-select.min.js"></script>
-    <script src="assets/js/jquery.barrating.min.js"></script>
-    <script src="assets/js/Chart.min.js"></script>
-    <script src="assets/js/raphael-min.js"></script>
-    <script src="assets/js/morris.min.js"></script>
-    <script src="assets/js/echarts.min.js"></script>
-    <script src="assets/js/echarts-gl.min.js"></script>
-    <script src="assets/js/main.js"></script>
+
 <script>
 
 
@@ -196,33 +224,11 @@ foreach($order1 as $row) {
 
 jQuery(document).ready(function() {
  
-var did;
 
-$("#myform").on('submit', function (event) {
-        event.preventDefault(); //prevent default action 
-        var post_url = $(this).attr("action"); //get form action url
-        var form_data = $(this).serialize(); //Encode form elements for submission
-
-        $.post(post_url, form_data, function (response) {
-
-
-            if (response == '1') {
-                location.reload();
-
-            } else {
-
-                console.log("there is an error");
-            }
-        });
-    });
         $(".tr").click(function() {
             var $row = $(this).closest("tr"),       // Finds the closest row <tr> 
              $tds = $row.find("td");             // Finds all children <td> elements
-
-              // Visits every single <td> element
-    // alert($tds.eq(1).text());  
-    $('#id').val($tds.eq(0).text());
-    did=$tds.eq(0).text();
+     $('#id').val($tds.eq(0).text());
     $('#docid').val($tds.eq(1).text());
     $('#speciality').val($tds.eq(2).text());
     
@@ -231,18 +237,7 @@ $("#myform").on('submit', function (event) {
 });
 
 $("#delete").click(function(e) {
-    event.preventDefault();
-$.ajax({   
-                            url: "admin/action/deletesp.php",
-                            type: "POST",
-							data: { id:did},
-                            dataType: 'json',
-                            success: function (response) {
-                              if(response!='0'){
-								
-								location.reload(); }else{alert("Error");}
-                            },
-                          });
+
                         });
 
 
@@ -251,37 +246,8 @@ $("#adduser").click(function(e) {
     
     $('#exampleModal1').modal('show'); 
 
-    $("#addform").on('submit', function (event) {
-        event.preventDefault(); //prevent default action 
-        var post_url = $(this).attr("action"); //get form action url
-        var form_data = $(this).serialize(); //Encode form elements for submission
-
-        $.post(post_url, form_data, function (response) {
-
-            if (response == '1') {
-                location.reload();
-
-            } else {
-
-                console.log("there is an error");
-            }
-        });
-    });
-      
-
-
-
-
-
-
 
                         });
-
-
-
-
-
-
 
 
 
@@ -295,10 +261,7 @@ $("#adduser").click(function(e) {
 
 </script>
 
-<?php
-include 'layout/infoc.php';
 
-?>
 
 
 
