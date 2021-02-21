@@ -3,6 +3,7 @@
 <?php
   session_start();
 
+  require_once '../include/Config.php';
     ?>
 
 
@@ -50,7 +51,6 @@
                                                 <th scope="col" >Patient Name</th>
                                                 <th scope="col">contact</th>
                                                 <th scope="col">Schedule</th>
-                                                <th scope="col">Status</th>
                                                 <th scope="col">Datecreated</th>
                                           
                                             </tr>
@@ -73,7 +73,6 @@ while($row = mysqli_fetch_array($order1)){
     echo "<td id='".$row['id']."'><a href='javascript:void(0);'>".$row['name']."</a></td>";
     echo "<td  id='".$row['id']."'>".$row['contact']."</td>";
     echo "<td  id='".$row['id']."'>".$row['schedule']."</td>";
-    echo "<td  id='".$row['id']."'>".$status."</td>";
     echo "<td  id='".$row['id']."'>".$row['date_created']."</td>";
     echo"</tr>";
 
